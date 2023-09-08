@@ -25,15 +25,9 @@
 			<p class="mt-6 text-base leading-7 text-gray-600">
 				Sorry, we couldn't find the page you're looking for.
 			</p>
-			<!-- TODO Remove once site has been roughed out -->
-			<p class="mt-6 text-base leading-7 text-gray-600">
-				Our site is still under construction, so it's possible that the page you're looking for
-				hasn't been created yet. If you think this is the case, please contact us and we'll look
-				into it.
-			</p>
 			<div class="mt-10">
 				<a href="/" class="text-sm font-semibold leading-7 text-indigo-600"
-					><span aria-hidden="true">&larr;</span> Back to home</a
+					><span aria-hidden="true">&larr;</span> Back to homepage</a
 				>
 			</div>
 		</div>
