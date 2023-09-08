@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HomepageHero from './HomepageHero.svelte';
 	import BlogSection from './BlogSection.svelte';
-	import OurStoreSection from './OurStoreSection.svelte';
+	import OurShopSection from './OurShopSection.svelte';
 
 	let showcaseProducts = [
 		{
@@ -10,7 +10,7 @@
 			price: '$45',
 			quantity: 1,
 			imgSrc: 'link_to_image_1.jpg',
-			href: '/store/0001'
+			href: '/shop/0001'
 		},
 		{
 			name: 'Tropical Sundew',
@@ -18,7 +18,7 @@
 			price: '$10',
 			quantity: 1,
 			imgSrc: 'link_to_image_2.jpg',
-			href: '/store/0002'
+			href: '/shop/0002'
 		},
 		{
 			name: 'Small Nepenthes',
@@ -26,7 +26,7 @@
 			price: '$40',
 			quantity: 1,
 			imgSrc: 'link_to_image_3.jpg',
-			href: '/store/0003'
+			href: '/shop/0003'
 		},
 		{
 			name: 'Large Nepenthes',
@@ -34,7 +34,7 @@
 			price: '$65',
 			quantity: 1,
 			imgSrc: 'link_to_image_4.jpg',
-			href: '/store/0004'
+			href: '/shop/0004'
 		}
 		// Add more products as needed
 	];
@@ -47,7 +47,7 @@
 <HomepageHero />
 <div class="max-w-7xl mx-auto px-8">
 	<div class="flex flex-col gap-8">
-		<OurStoreSection />
+		<OurShopSection />
 
 		<BlogSection />
 
