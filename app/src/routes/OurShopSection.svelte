@@ -6,7 +6,7 @@
 			price: '$45',
 			quantity: 1,
 			imgSrc: 'img/venus_fly_trap_1.jpg',
-			href: '/store/0001'
+			href: '/shop/0001'
 		},
 		{
 			name: 'Tropical Sundew',
@@ -14,7 +14,7 @@
 			price: '$10',
 			quantity: 1,
 			imgSrc: 'img/drosera_1.jpg',
-			href: '/store/0002'
+			href: '/shop/0002'
 		},
 		{
 			name: 'Small Nepenthes',
@@ -22,7 +22,7 @@
 			price: '$40',
 			quantity: 1,
 			imgSrc: 'img/nepenthes_1.jpg',
-			href: '/store/0003'
+			href: '/shop/0003'
 		},
 		{
 			name: 'Large Nepenthes',
@@ -30,12 +30,12 @@
 			price: '$65',
 			quantity: 1,
 			imgSrc: 'img/nepenthes_2.jpg',
-			href: '/store/0004'
+			href: '/shop/0004'
 		}
 	];
 </script>
 
-<section id="store" class="mb-6">
+<section id="shop" class="mb-6">
 	<h1 class="text-3xl font-bold">See our selection</h1>
 	<div class="mx-auto max-w-2xl px-4sm:px-6 py-4 lg:max-w-7xl lg:px-8">
 		<div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
