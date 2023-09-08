@@ -37,12 +37,13 @@
 			<nav
 				class="mx-auto flex w-full max-w-7xl items-center gap-x-4 px-6 text-sm leading-7 text-gray-600 lg:px-8"
 			>
+				<!-- TODO Change contact link to send to a proper support web form -->
 				<a href="/contact">Contact support</a>
-				<svg viewBox="0 0 2 2" aria-hidden="true" class="h-0.5 w-0.5 fill-gray-300">
+				<!-- TODO Send to Facebook -->
+				<!-- <svg viewBox="0 0 2 2" aria-hidden="true" class="h-0.5 w-0.5 fill-gray-300">
 					<circle cx="1" cy="1" r="1" />
 				</svg>
-				<!-- TODO Send to Facebook -->
-				<a href="#">Facebook</a>
+				<a href="/">Facebook</a> -->
 			</nav>
 		</div>
 	</footer>
