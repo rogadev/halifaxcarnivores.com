@@ -5,7 +5,7 @@
 			species: 'Dionaea Muscipula',
 			price: '$45',
 			quantity: 1,
-			imgSrc: 'img/venus_fly_trap_1.jpg',
+			imgSrc: 'img/dionaea/1.jpg',
 			href: '/shop/0001'
 		},
 		{
@@ -13,7 +13,7 @@
 			species: 'Drosera Capensis Alba',
 			price: '$10',
 			quantity: 1,
-			imgSrc: 'img/drosera_1.jpg',
+			imgSrc: 'img/drosera/capensis/5.jpg',
 			href: '/shop/0002'
 		},
 		{
@@ -21,7 +21,7 @@
 			species: 'Nepenthes St. Gaya',
 			price: '$40',
 			quantity: 1,
-			imgSrc: 'img/nepenthes_1.jpg',
+			imgSrc: 'img/nepenthes/7.jpg',
 			href: '/shop/0003'
 		},
 		{
@@ -29,7 +29,7 @@
 			species: 'Nepenthes mirabilis var. Globosa x ampularia (Green x Black Miracle)',
 			price: '$65',
 			quantity: 1,
-			imgSrc: 'img/nepenthes_2.jpg',
+			imgSrc: 'img/nepenthes/1.jpg',
 			href: '/shop/0004'
 		}
 	];

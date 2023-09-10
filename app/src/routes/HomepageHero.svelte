@@ -75,7 +75,7 @@
 						>
 							<div class="relative">
 								<img
-									src="img/venus_fly_trap_1.jpg"
+									src="img/drosera/capensis/3.jpg"
 									alt=""
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
@@ -87,7 +87,7 @@
 						<div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
 							<div class="relative">
 								<img
-									src="img/nepenthes_2.jpg"
+									src="img/drosera/rotundifolia/3.jpg"
 									alt=""
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
@@ -97,7 +97,7 @@
 							</div>
 							<div class="relative">
 								<img
-									src="img/pinguicula_1.jpg"
+									src="img/nepenthes/5.png"
 									alt=""
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
@@ -109,7 +109,7 @@
 						<div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
 							<div class="relative">
 								<img
-									src="img/drosera_2.jpg"
+									src="img/pinguicula/1.jpg"
 									alt=""
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
@@ -119,7 +119,7 @@
 							</div>
 							<div class="relative">
 								<img
-									src="img/drosera_3.jpg"
+									src="img/nepenthes/6.jpg"
 									alt=""
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>

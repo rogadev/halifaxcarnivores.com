@@ -2,42 +2,6 @@
 	import HomepageHero from './HomepageHero.svelte';
 	import BlogSection from './BlogSection.svelte';
 	import OurShopSection from './OurShopSection.svelte';
-
-	let showcaseProducts = [
-		{
-			name: 'Venus Fly Trap',
-			species: 'Dionaea Muscipula',
-			price: '$45',
-			quantity: 1,
-			imgSrc: 'link_to_image_1.jpg',
-			href: '/shop/0001'
-		},
-		{
-			name: 'Tropical Sundew',
-			species: 'Drosera Capensis Alba',
-			price: '$10',
-			quantity: 1,
-			imgSrc: 'link_to_image_2.jpg',
-			href: '/shop/0002'
-		},
-		{
-			name: 'Small Nepenthes',
-			species: 'Nepenthes St. Gaya',
-			price: '$40',
-			quantity: 1,
-			imgSrc: 'link_to_image_3.jpg',
-			href: '/shop/0003'
-		},
-		{
-			name: 'Large Nepenthes',
-			species: 'Nepenthes mirabilis var. Globosa x ampularia (Green x Black Miracle)',
-			price: '$65',
-			quantity: 1,
-			imgSrc: 'link_to_image_4.jpg',
-			href: '/shop/0004'
-		}
-		// Add more products as needed
-	];
 </script>
 
 <svelte:head>
