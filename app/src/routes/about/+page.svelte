@@ -1,10 +1,18 @@
 <script lang="ts">
 	import Link from '$lib/components/LinkText.svelte';
-	import { text } from '@sveltejs/kit';
+	import Icon from '@iconify/svelte';
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>About | Halifax Carnivores</title>
+	<meta
+		name="description"
+		content="Discover Halifax Carnivores, your go-to destination for beginner-friendly carnivorous plants and essential supplies in Halifax. Learn about our popular plant varieties such as Nepenthes, Drosera, and Venus Flytraps. Find everything you need to start your carnivorous plant journey, including the perfect potting premix. Whether you're looking to buy plants or seeking tips on plant care, we're here to nurture your green thumb."
+	/>
+	<meta
+		name="keywords"
+		content="Carnivorous plants Halifax, Nepenthes Halifax, Drosera Halifax, Venus Flytrap Halifax, Sarracenia Halifax, Plant soil premix Halifax, Beginner plant care Halifax, Halifax Carnivores, Plant shop Halifax, Dionaea muscipula Halifax"
+	/>
 </svelte:head>
 
 <div class="bg-white px-6 py-32 lg:px-8">
@@ -31,18 +39,7 @@
 			</p>
 			<ul role="list" class="mt-8 max-w-3xl space-y-8 text-gray-600">
 				<li class="flex gap-x-3">
-					<svg
-						class="mt-1 h-5 w-5 flex-none text-indigo-600"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+					<Icon icon="ph:plant-bold" class="mt-1 h-5 w-5 flex-none text-indigo-600" />
 					<span
 						><strong class="font-semibold text-gray-900">Nepenthes.</strong> Commonly known as tropical
 						pitcher plants, Nepenthes are captivating and otherworldly carnivorous plants that add a
@@ -50,18 +47,7 @@
 					>
 				</li>
 				<li class="flex gap-x-3">
-					<svg
-						class="mt-1 h-5 w-5 flex-none text-indigo-600"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+					<Icon icon="ph:plant-bold" class="mt-1 h-5 w-5 flex-none text-indigo-600" />
 					<span
 						><strong class="font-semibold text-gray-900">Drosera.</strong> Also known as sundew plants,
 						Drosera captivate with their delicate, dewy tentacles that charm and trap insects. A mesmerizing
@@ -69,18 +55,7 @@
 					>
 				</li>
 				<li class="flex gap-x-3">
-					<svg
-						class="mt-1 h-5 w-5 flex-none text-indigo-600"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+					<Icon icon="ph:plant-bold" class="mt-1 h-5 w-5 flex-none text-indigo-600" />
 					<span
 						><strong class="font-semibold text-gray-900">Venus Fly Traps.</strong> Nature's cunning predators,
 						Venus Fly Traps intrigue with their iconic snap-trap mechanism. These captivating plants
@@ -88,14 +63,32 @@
 						and ingenuity.</span
 					>
 				</li>
+				<li class="flex gap-x-3">
+					<Icon icon="ph:plant-bold" class="mt-1 h-5 w-5 flex-none text-indigo-600" />
+					<span
+						><strong class="font-semibold text-gray-900">Sarracenia.</strong> Also known as the North
+						American Pitcher Plant, Sarracenia enthralls with its majestic, trumpet-shaped leaves designed
+						to lure, trap, and digest insects. A natural spectacle of carnivorous sophistication, embodying
+						fierce beauty and the incredible innovation of nature.</span
+					>
+				</li>
+				<li class="flex gap-x-3">
+					<Icon icon="ph:plant-bold" class="mt-1 h-5 w-5 flex-none text-indigo-600" />
+					<span
+						><strong class="font-semibold text-gray-900">Pinguicula.</strong> Often referred to as Butterworts,
+						Pinguicula bewitches with its vibrant, rosette-shaped formation and glistening, sticky leaves
+						that are a trap for unsuspecting insects. The enchanting beauty of these plants adds a splash
+						of color and intrigue to any collection.</span
+					>
+				</li>
 			</ul>
 			<p class="mt-8">
 				Currently, you can explore our captivating carnivorous plant collection
 				<Link href="/shop">right here</Link> on our website. To make a purchase, simply
 				<Link href="/contact">give us a call or send us an email</Link>, and our knowledgeable team
-				will be delighted to assist you. Stay tuned, as we're actively working on an online store
-				for your convenience, where you'll soon be able to browse and buy these botanical wonders
-				with just a few clicks.
+				will be delighted to assist you. <strong>Stay tuned</strong>, as we're actively working on
+				an online store for your convenience, where you'll soon be able to browse and buy these
+				botanical wonders with just a few clicks.
 			</p>
 			<h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
 				Helping beginners grow beautiful exotics
