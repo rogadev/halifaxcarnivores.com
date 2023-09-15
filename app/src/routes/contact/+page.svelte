@@ -40,7 +40,7 @@
 					questions.
 				</p>
 				<dl class="mt-10 space-y-4 text-base leading-7 text-gray-600">
-					<div class="flex gap-x-4">
+					<!-- <div class="flex gap-x-4">
 						<dt class="flex-none">
 							<span class="sr-only">Pickup Address</span>
 							<svg
@@ -61,7 +61,7 @@
 						<dd class="hover:text-blue-700">
 							<a href="https://goo.gl/maps/k86tvMgM78EUPop19">33 Becks Way<br />Dartmouth, NS</a>
 						</dd>
-					</div>
+					</div> -->
 					<div class="flex gap-x-4">
 						<dt class="flex-none">
 							<span class="sr-only">Telephone</span>
