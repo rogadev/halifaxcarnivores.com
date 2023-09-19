@@ -1,3 +1,15 @@
+<svelte:head>
+	<title>Contact Halifax Carnivores - Reach Out to Our Expert Team</title>
+	<meta
+		name="description"
+		content="Got questions or need assistance? Reach out to the friendly team at Halifax Carnivores. We are here to assist you with any inquiries, be it about our exotic plant collection, care tips, or purchase details. Contact us via phone or email today."
+	/>
+	<meta
+		name="keywords"
+		content="Contact Halifax Carnivores, carnivorous plant store contact, plant care assistance Halifax, carnivorous plant inquiry, exotic plant support Halifax, plant purchase assistance, plant care tips contact"
+	/>
+</svelte:head>
+
 <div class="relative isolate bg-white">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
 		<div class="relative px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-48">
