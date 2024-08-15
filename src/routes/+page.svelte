@@ -1,4 +1,6 @@
 <script lang="ts">
+	import OrderingSection from './OrderingSection.svelte';
+
 	import EventsSection from './EventsSection.svelte';
 
 	import CareSection from './CareSection.svelte';
@@ -16,6 +18,7 @@
 <div class="max-w-7xl mx-auto px-8">
 	<div class="flex flex-col gap-8">
 		<OurShopSection />
+		<OrderingSection />
 		<CareSection />
 		<BlogSection />
 		<EventsSection />
