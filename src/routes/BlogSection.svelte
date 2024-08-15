@@ -9,7 +9,7 @@
 			datetime: '2023-09-05',
 			date: 'September 5, 2023',
 			link: '/blog',
-			author: { image: 'img/ryanroga.jpg', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
+			author: { image: 'logo/large.webp', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
 			categories: [
 				{ title: 'Drosera', link: '/category/drosera', primary: true },
 				{ title: 'Plant Care Tips', link: '/category/plant-care-tips' }
@@ -22,7 +22,7 @@
 			datetime: '2023-09-12',
 			date: 'September 12, 2023',
 			link: '/blog',
-			author: { image: 'img/ryanroga.jpg', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
+			author: { image: 'logo/large.webp', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
 			categories: [
 				{ title: 'Nepenthes', link: '/category/nepenthes', primary: true },
 				{ title: 'Exotic Plants', link: '/category/exotic-plants' }
@@ -35,7 +35,7 @@
 			datetime: '2023-09-19',
 			date: 'September 19, 2023',
 			link: '/blog',
-			author: { image: 'img/ryanroga.jpg', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
+			author: { image: 'logo/large.webp', name: 'Ryan', title: 'Owner, Halifax Carnivores' },
 			categories: [
 				{ title: 'Venus Fly Traps', link: '/category/venus-fly-traps', primary: true },
 				{ title: 'Plant Care Guide', link: '/category/plant-care-guide' }
