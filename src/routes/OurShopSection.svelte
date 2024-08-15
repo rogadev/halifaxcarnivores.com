@@ -95,6 +95,7 @@
 		white-space: nowrap;
 		font-size: 16px;
 		width: 105%;
+		height: 2.5rem;
 		text-align: center;
 	}
 </style>
