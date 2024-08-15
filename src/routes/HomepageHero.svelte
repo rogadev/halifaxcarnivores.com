@@ -45,29 +45,36 @@
 		<div class="overflow-hidden">
 			<div class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
 				<div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-					<div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
+					<section id="introduction" class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
 						<h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 							Halifax Carnivores
 						</h1>
+						<h2 class="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl">
+							Your Local Source for Exotic Carnivorous Plants and More in Halifax and Dartmouth
+						</h2>
 						<p class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
 							Discover the fascinating world of carnivorous plants with Halifax Carnivores, your
-							go-to destination for rare and exotic flora including Venus Fly Traps, Nepenthes,
-							Drosera, and more. Located in Dartmouth, we are more than just a plant shop; we are a
-							thriving community offering a rich blog full of growing tips and hosting annual events
-							for enthusiasts to connect and share.
+							go-to destination for rare and exotic insect-eating flora like Venus Flytraps,
+							Sarracenia, Nepenthes, and Drosera. More than just a plant shop, we're a vibrant
+							community in downtown Dartmouth, Nova Scotia, offering plant enthusiasts of all levels
+							a wealth of resources, including expert plant care tips, a helpful blog, and engaging
+							educational events. Discover how to grow and care for these fascinating plants with us
+							today!
 						</p>
 						<div class="mt-10 flex items-center gap-x-6">
 							<a
 								href="/shop"
 								class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-								>See our selection</a
 							>
+								Shop Now
+							</a>
 							<a href="/contact" class="text-sm font-semibold leading-6 text-gray-900"
 								>Get in touch <span aria-hidden="true">→</span></a
 							>
 						</div>
-					</div>
-					<div
+					</section>
+					<section
+						id="hero"
 						class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0"
 					>
 						<div
@@ -128,7 +135,7 @@
 								/>
 							</div>
 						</div>
-					</div>
+					</section>
 				</div>
 			</div>
 		</div>
