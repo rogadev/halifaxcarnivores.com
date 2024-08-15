@@ -1,34 +1,50 @@
 <script lang="ts">
 	let showcaseProducts = [
 		{
-			name: 'Venus Fly Trap',
+			name: 'Venus Fly Traps',
 			species: 'Dionaea Muscipula',
-			price: '$45',
+			price: '$20-40',
 			imgSrc: 'img/dionaea/1.jpg',
 			href: '/shop/0001',
 			stock: 0
 		},
 		{
-			name: 'Tropical Sundew',
-			species: 'Drosera Capensis Alba',
-			price: '$10',
-			imgSrc: 'img/drosera/capensis/5.jpg',
+			name: 'Tropical Sundews',
+			species: 'Drosera Capensis',
+			price: '$20-30',
+			imgSrc: 'img/drosera/capensis/8.jpg',
 			href: '/shop/0002',
 			stock: 3
 		},
 		{
-			name: 'Small Nepenthes',
-			species: 'Nepenthes St. Gaya',
-			price: '$40',
-			imgSrc: 'img/nepenthes/7.jpg',
+			name: 'Trumpet Pitcher Plants',
+			species: 'Sarracenia',
+			price: '$30-60',
+			imgSrc: 'img/sarracenia/purpurea/1.jpg',
 			href: '/shop/0003',
 			stock: 2
 		},
 		{
-			name: 'Large Nepenthes',
-			species: 'Nepenthes mirabilis var. Globosa x ampularia (Green x Black Miracle)',
-			price: '$65',
+			name: 'Tropical Pitcher Plants',
+			species: 'Nepenthes',
+			price: '$40+',
 			imgSrc: 'img/nepenthes/1.jpg',
+			href: '/shop/0004',
+			stock: 1
+		},
+		{
+			name: 'Forked Sundews',
+			species: 'Drosera Binata',
+			price: '$25-50',
+			imgSrc: 'img/drosera/binata/1.jpg',
+			href: '/shop/0004',
+			stock: 1
+		},
+		{
+			name: 'Temperate Sundews',
+			species: 'Drosera Filiformis',
+			price: '$25-50',
+			imgSrc: 'img/drosera/filiformis/1.jpg',
 			href: '/shop/0004',
 			stock: 1
 		}
