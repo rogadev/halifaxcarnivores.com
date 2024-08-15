@@ -111,7 +111,7 @@
 			</div>
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<a href="/" class="flex flex-shrink-0 items-center">
-					<img class="h-8 w-auto rounded" src="/logo/large.png" alt="Halifax Carnivores" />
+					<img class="h-8 w-auto rounded" src="/logo/large.webp" alt="Halifax Carnivores" />
 				</a>
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
