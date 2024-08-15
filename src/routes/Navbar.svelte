@@ -17,7 +17,7 @@
 		},
 		{
 			name: 'About',
-			href: '/about'
+			href: '/about-us'
 		},
 		{
 			name: 'Shop',
@@ -25,7 +25,7 @@
 		},
 		{
 			name: 'Care',
-			href: '/care'
+			href: '/plant-care-guides'
 		},
 		{
 			name: 'Blog',
@@ -34,6 +34,14 @@
 		{
 			name: 'Contact',
 			href: '/contact'
+		},
+		{
+			name: 'FAQ',
+			href: '/faq'
+		},
+		{
+			name: 'Events',
+			href: '/events'
 		}
 	];
 	const profileLinks = [

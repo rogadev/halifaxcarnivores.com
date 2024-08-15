@@ -14,4 +14,4 @@
 	/>
 </svelte:head>
 
-<UnderConstruction />
+<UnderConstruction title="Plant Shop" />

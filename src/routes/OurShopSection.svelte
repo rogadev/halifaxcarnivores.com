@@ -5,7 +5,7 @@
 			species: 'Dionaea Muscipula',
 			price: '$20-40',
 			imgSrc: 'img/dionaea/1.jpg',
-			href: '/shop/0001',
+			href: '/shop',
 			stock: 0
 		},
 		{
@@ -13,7 +13,7 @@
 			species: 'Drosera Capensis',
 			price: '$20-30',
 			imgSrc: 'img/drosera/capensis/8.jpg',
-			href: '/shop/0002',
+			href: '/shop',
 			stock: 3
 		},
 		{
@@ -21,7 +21,7 @@
 			species: 'Sarracenia',
 			price: '$30-60',
 			imgSrc: 'img/sarracenia/purpurea/1.jpg',
-			href: '/shop/0003',
+			href: '/shop',
 			stock: 2
 		},
 		{
@@ -29,7 +29,7 @@
 			species: 'Nepenthes',
 			price: '$40+',
 			imgSrc: 'img/nepenthes/1.jpg',
-			href: '/shop/0004',
+			href: '/shop',
 			stock: 1
 		},
 		{
@@ -37,7 +37,7 @@
 			species: 'Drosera Binata',
 			price: '$25-50',
 			imgSrc: 'img/drosera/binata/1.jpg',
-			href: '/shop/0004',
+			href: '/shop',
 			stock: 1
 		},
 		{
@@ -45,7 +45,7 @@
 			species: 'Drosera Filiformis',
 			price: '$25-50',
 			imgSrc: 'img/drosera/filiformis/1.jpg',
-			href: '/shop/0004',
+			href: '/shop',
 			stock: 1
 		}
 	];

@@ -15,4 +15,4 @@
 	/>
 </svelte:head>
 
-<UnderConstruction />
+<UnderConstruction title="Plant Care" />
