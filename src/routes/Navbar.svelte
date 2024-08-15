@@ -124,7 +124,7 @@
 			<div
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 			>
-				<a href="/contact" class="hidden md:block text-white font-bold text-lg">902-830-8881</a>
+				<!-- <a href="/contact" class="hidden md:block text-white font-bold text-lg">902-830-8881</a>
 				<a
 					href="tel:19028308881"
 					type="button"
@@ -132,7 +132,7 @@
 				>
 					<Icon icon="mdi:phone" class="-ml-0.5 h-5 w-5" />
 					Call Now
-				</a>
+				</a> -->
 
 				{#if user}
 					<button
