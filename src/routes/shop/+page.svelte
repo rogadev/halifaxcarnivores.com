@@ -1,4 +1,5 @@
 <script lang="ts">
+	import OurShopSection from '$lib/components/OurShopSection/index.svelte';
 	import UnderConstruction from '$lib/components/UnderConstruction.svelte';
 </script>
 
@@ -14,4 +15,6 @@
 	/>
 </svelte:head>
 
-<UnderConstruction title="Plant Shop" />
+<div class="px-8 py-4">
+	<OurShopSection />
+</div>
