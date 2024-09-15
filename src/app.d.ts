@@ -7,6 +7,22 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
+
+	interface Product {
+		id: number;
+		name: string;
+		species: string;
+		href: string;
+		imgSrc: string;
+		imgAlt: string;
+		priceLow?: number;
+		priceHigh?: number;
+		stock: number;
+		bannerText?: string;
+		bannerColor?: string;
+		onSale?: boolean;
+		salePrice?: number;
+	}
 }
 
-export {};
+export { };

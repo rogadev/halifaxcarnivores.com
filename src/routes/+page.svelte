@@ -7,7 +7,7 @@
 
 	import HomepageHero from './HomepageHero.svelte';
 	import BlogSection from './BlogSection.svelte';
-	import OurShopSection from './OurShopSection.svelte';
+	import OurShopSection from '$lib/components/OurShopSection/index.svelte';
 </script>
 
 <svelte:head>
