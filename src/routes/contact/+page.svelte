@@ -1,8 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Modal from './Modal.svelte';
+	import { enhance } from '$app/forms'; // Import enhance function
 
-	let showBusinessHours = false;
-	let currentTime = '';
+	export let data: any;
+
+	let hasError: boolean = false;
+	let feedbackMessage: string = '';
+
+	// Control the modal's visibility
+	let showModal: boolean = false;
+
+	// Variables for business hours
+	let showBusinessHours: boolean = false;
+	let currentTime: string = '';
 
 	function isBusinessHours(): boolean {
 		const now = new Date();
@@ -21,6 +32,26 @@
 			minute: 'numeric',
 			hour12: true
 		});
+	}
+
+	// Handle form submission result
+	$: if (data?.success) {
+		hasError = false;
+		showModal = true;
+		feedbackMessage = '';
+		alert('Your form has been submitted.');
+	}
+
+	$: if (data?.error) {
+		hasError = true;
+		feedbackMessage = data.errorMessage ?? data.error;
+		console.error(data);
+		alert('Something went wrong submitting your form./n' + data.error);
+	}
+
+	// Function to handle modal close
+	function handleCloseModal() {
+		showModal = false;
 	}
 
 	onMount(() => {
@@ -124,8 +155,8 @@
 				{/if}
 			</div>
 		</div>
-		<!-- TODO remove hidden property and connect web form -->
-		<form action="#" method="POST" class="hidden px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
+
+		<form method="POST" use:enhance class="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
 			<div class="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
 				<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<div>
@@ -205,7 +236,19 @@
 						>Send message</button
 					>
 				</div>
+				{#if hasError}
+					<div class="mt-6 p-4 bg-red-100 rounded-md">
+						<p class="text-sm font-semibold text-red-800">Error: {feedbackMessage}</p>
+					</div>
+				{/if}
 			</div>
 		</form>
 	</div>
 </div>
+
+<Modal
+	title="Message Sent Successfully"
+	message="Thank you for contacting us! We'll get back to you shortly."
+	show={showModal}
+	on:close={handleCloseModal}
+/>
