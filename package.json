@@ -38,12 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.46.1",
 		"resend": "^4.0.0"
-	},
-	"pnpm": {
-		"overrides": {
-			"micromatch@<4.0.8": ">=4.0.8",
-			"svelte@<4.2.19": ">=4.2.19"
-		}
 	}
 }
