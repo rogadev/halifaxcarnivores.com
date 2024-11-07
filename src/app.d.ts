@@ -23,6 +23,11 @@ declare global {
 		onSale?: boolean;
 		salePrice?: number;
 	}
+
+	declare module '$env/static/private' {
+		export const RESEND_API_KEY: string;
+		// Add other private environment variables here
+	}
 }
 
 export { };

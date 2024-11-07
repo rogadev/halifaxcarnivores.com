@@ -36,5 +36,9 @@
 		"vite": "^4.4.2",
 		"vitest": "^0.34.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/supabase-js": "^2.46.1",
+		"resend": "^4.0.0"
+	}
 }
