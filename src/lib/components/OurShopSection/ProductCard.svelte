@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Icon from '@iconify/svelte';
 
 	type Plant = {
 		id: number;
@@ -28,6 +29,7 @@
 	export let product: Plant;
 
 	let imageLoaded = false;
+	let imageError = false;
 
 	// Get the full product name
 	$: productName = [product.genus, product.species, product.unique].filter(Boolean).join(' ');
@@ -39,6 +41,10 @@
 		img.src = product.images[0];
 		img.onload = () => {
 			imageLoaded = true;
+			imageError = false;
+		};
+		img.onerror = () => {
+			imageError = true;
 		};
 	});
 </script>
@@ -47,15 +53,22 @@
 	<div
 		class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 relative"
 	>
-		<img
-			src={product.images[0]}
-			alt={productName || product.name}
-			class="h-full w-full object-cover object-center lg:h-full lg:w-full transition-all duration-300"
-			class:grayscale={product.quantity < 1}
-			loading="lazy"
-			decoding="async"
-			fetchpriority="high"
-		/>
+		{#if !imageError}
+			<img
+				src={product.images[0]}
+				alt={productName || product.name}
+				class="h-full w-full object-cover object-center lg:h-full lg:w-full transition-all duration-300"
+				class:grayscale={product.quantity < 1}
+				loading="lazy"
+				decoding="async"
+				fetchpriority="high"
+				on:error={() => (imageError = true)}
+			/>
+		{:else}
+			<div class="min-h-full w-full bg-emerald-600 flex items-center justify-center">
+				<Icon icon="mdi:plant" class="h-1/3 w-1/3 text-white" />
+			</div>
+		{/if}
 		{#if product.quantity < 1}
 			<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 				<span class="bg-black text-white px-6 py-3 text-sm font-medium rounded-lg shadow-lg">

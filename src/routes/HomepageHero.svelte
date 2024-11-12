@@ -1,5 +1,13 @@
 <script lang="ts">
-	//
+	import Icon from '@iconify/svelte';
+
+	const imagePaths = [
+		'/img/plants/drosera-capensis-alba-eating.jpg',
+		'/img/plants/pinguicula-esseriana.jpg',
+		'/img/plants/tricolor-ampularia.jpg',
+		'/img/plants/pinguicula-hybrid.jpg',
+		'/img/plants/moss-garden.jpg'
+	];
 </script>
 
 <main id="intro" class="mb-6 bg-white">
@@ -82,8 +90,8 @@
 						>
 							<div class="relative">
 								<img
-									src="img/drosera/capensis/3.jpg"
-									alt=""
+									src={imagePaths[0]}
+									alt="Drosera plant"
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
 								<div
@@ -94,8 +102,8 @@
 						<div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
 							<div class="relative">
 								<img
-									src="img/drosera/rotundifolia/3.jpg"
-									alt=""
+									src={imagePaths[1]}
+									alt="Rotundifolia plant"
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
 								<div
@@ -104,8 +112,8 @@
 							</div>
 							<div class="relative">
 								<img
-									src="img/nepenthes/5.png"
-									alt=""
+									src={imagePaths[2]}
+									alt="Nepenthes plant"
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
 								<div
@@ -116,8 +124,8 @@
 						<div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
 							<div class="relative">
 								<img
-									src="img/pinguicula/1.jpg"
-									alt=""
+									src={imagePaths[3]}
+									alt="Pinguicula plant"
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
 								<div
@@ -126,8 +134,8 @@
 							</div>
 							<div class="relative">
 								<img
-									src="img/nepenthes/6.jpg"
-									alt=""
+									src={imagePaths[4]}
+									alt="Nepenthes plant"
 									class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
 								/>
 								<div

@@ -1,12 +1,15 @@
 <script lang="ts">
 	import ProductCard from './ProductCard.svelte';
-	import { supabase } from '$lib/components/supabaseClient.js';
+	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 
 	let plants: any[] = [];
 
 	onMount(async () => {
-		const { data, error } = await supabase.from('Plant').select('*');
+		const { data, error } = await supabase
+			.from('Plant')
+			.select('*')
+			.order('createdAt', { ascending: false });
 
 		if (error) {
 			console.error('Error fetching plants:', error);
