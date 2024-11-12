@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Icon from '@iconify/svelte';
+	import { onMount } from 'svelte';
 
 	interface Plant {
 		id: number;
@@ -29,24 +31,49 @@
 	}
 
 	export let plantItem: Plant;
+	let showMessage = false;
+	let showPopover = false;
 
-	function handleOrder() {
-		goto('/contact');
+	// Preload both cart icons
+	onMount(() => {
+		const icons = ['mdi:cart-plus', 'mdi:cart-off'];
+		icons.forEach((icon) => {
+			const img = new Image();
+			img.src = `https://api.iconify.design/${icon.replace(':', '/')}.svg`;
+		});
+	});
+
+	function handleLearnMore() {
+		goto(`/plants/${plantItem.id}`);
+	}
+
+	function handleAddToCart() {
+		showMessage = true;
+		setTimeout(() => {
+			showMessage = false;
+		}, 3000);
 	}
 </script>
 
-<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col">
 	{#if plantItem.images && plantItem.images.length > 0}
 		<img src={plantItem.images[0]} alt={plantItem.name} class="w-full h-64 object-cover" />
+	{:else}
+		<div class="w-full h-64 bg-green-100 flex items-center justify-center">
+			<Icon icon="mdi:plant" class="text-green-600" width="64" height="64" />
+		</div>
 	{/if}
 
-	<div class="p-6">
+	<div class="p-6 flex flex-col flex-grow">
 		<div class="flex justify-between items-start mb-4">
 			<div>
-				<h2 class="text-2xl font-bold text-gray-900">{plantItem.name}</h2>
-				<p class="text-sm text-gray-600 italic">
+				<h2 class="text-2xl font-bold text-gray-900">
 					{plantItem.genus}
-					{plantItem.species} '{plantItem.unique}'
+					{plantItem.species}
+					<span class="text-xl">{plantItem.unique}</span>
+				</h2>
+				<p class="text-sm text-gray-600">
+					{plantItem.name}
 				</p>
 			</div>
 			<div class="text-right">
@@ -64,55 +91,48 @@
 			</div>
 		</div>
 
-		{#if plantItem.description}
-			<div class="mb-6">
-				<h3 class="text-lg font-semibold mb-2">Description</h3>
-				<p class="text-gray-700 whitespace-pre-line">{plantItem.description}</p>
-			</div>
-		{/if}
-
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-			{#if plantItem.water}
-				<div>
-					<h3 class="text-lg font-semibold mb-2">Water Requirements</h3>
-					<p class="text-gray-700 whitespace-pre-line">{plantItem.water}</p>
-				</div>
-			{/if}
-			{#if plantItem.light}
-				<div>
-					<h3 class="text-lg font-semibold mb-2">Light Requirements</h3>
-					<p class="text-gray-700 whitespace-pre-line">{plantItem.light}</p>
-				</div>
-			{/if}
-			{#if plantItem.temperature}
-				<div>
-					<h3 class="text-lg font-semibold mb-2">Temperature Requirements</h3>
-					<p class="text-gray-700 whitespace-pre-line">{plantItem.temperature}</p>
-				</div>
-			{/if}
-			{#if plantItem.humidity}
-				<div>
-					<h3 class="text-lg font-semibold mb-2">Humidity Requirements</h3>
-					<p class="text-gray-700 whitespace-pre-line">{plantItem.humidity}</p>
-				</div>
-			{/if}
-		</div>
-
-		{#if plantItem.seasonality}
-			<div class="mb-6">
-				<h3 class="text-lg font-semibold mb-2">Seasonality</h3>
-				<p class="text-gray-700 whitespace-pre-line">{plantItem.seasonality}</p>
-			</div>
-		{/if}
-
-		<div class="mt-6">
+		<div class="mt-auto flex gap-3 items-center">
 			<button
-				on:click={handleOrder}
-				class="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200"
-				disabled={plantItem.quantity === 0}
+				on:click={handleLearnMore}
+				class="flex-grow inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 hover:bg-gray-700 h-10 px-4 py-2 text-white"
 			>
-				{plantItem.quantity > 0 ? 'Order Now' : 'Out of Stock'}
+				Learn More
 			</button>
+			<div class="relative">
+				<button
+					on:mouseenter={() => (showPopover = true)}
+					on:mouseleave={() => (showPopover = false)}
+					on:click={handleAddToCart}
+					class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-200 hover:text-gray-600 h-10 w-10 relative"
+					aria-label="Add to cart (coming soon)"
+				>
+					<Icon
+						icon={showPopover ? 'mdi:cart-off' : 'mdi:cart-plus'}
+						width="20"
+						height="20"
+						class={showPopover ? 'text-gray-500 cursor-not-allowed' : 'cursor-not-allowed'}
+					/>
+				</button>
+				{#if showPopover}
+					<div
+						class="absolute bottom-full right-0 mb-2 w-48 bg-gray-800 text-white text-sm rounded-md p-2 shadow-lg"
+					>
+						<p>Shopping cart functionality coming soon!</p>
+						<div
+							class="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-gray-800"
+						/>
+					</div>
+				{/if}
+			</div>
 		</div>
+
+		{#if showMessage}
+			<div
+				class="fixed top-4 right-4 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded"
+				role="alert"
+			>
+				<p>Shopping cart functionality coming soon!</p>
+			</div>
+		{/if}
 	</div>
 </div>

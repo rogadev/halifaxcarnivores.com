@@ -10,7 +10,7 @@
 
 	async function fetchPlants() {
 		try {
-			const { data, error: err } = await supabase.from('plants').select('*');
+			const { data, error: err } = await supabase.from('Plant').select('*');
 
 			if (err) {
 				throw err;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProductCard from './ProductCard.svelte';
-	import { supabase } from '$lib/components/supabaseClient.js';
+	import { supabase } from '$lib/supabaseClient';
 	import { onMount } from 'svelte';
 
 	let plants: any[] = [];

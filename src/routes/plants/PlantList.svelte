@@ -29,7 +29,7 @@
 		createdAt: Date;
 		updatedAt: Date;
 	}
-	export let plant: Plant;
+	export let plants: Plant[];
 
 	let searchQuery = '';
 	let filteredPlants: Plant[] = [];
@@ -42,17 +42,17 @@
 	};
 
 	onMount(() => {
-		// Initialize Fuse with the plants data
-		fuse = new Fuse([plant], fuseOptions);
-		filteredPlants = [plant];
+		// Initialize Fuse with the plants data directly
+		fuse = new Fuse(plants, fuseOptions);
+		filteredPlants = plants;
 	});
 
 	$: {
 		if (fuse && searchQuery) {
 			const results = fuse.search(searchQuery);
 			filteredPlants = results.map((result) => result.item);
-		} else if (plant) {
-			filteredPlants = [plant];
+		} else if (plants) {
+			filteredPlants = plants;
 		}
 	}
 </script>
