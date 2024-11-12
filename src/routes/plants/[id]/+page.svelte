@@ -63,36 +63,26 @@
 		<div class="bg-white rounded-lg shadow-lg overflow-hidden">
 			<div>
 				{#if plant.images && plant.images.length > 0}
-					<div class="relative w-full" style="height: min(33vh, 400px);">
-						<button class="w-full h-full" on:click={toggleModal}>
-							<img
-								src={plant.images[currentImageIndex]}
-								alt={`${plant.name} - Image ${currentImageIndex + 1}`}
-								class="w-full h-full object-cover"
-							/>
-						</button>
-
-						{#if plant.images.length > 1}
-							<button
-								on:click|stopPropagation={previousImage}
-								class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-opacity {currentImageIndex ===
-								0
-									? 'hidden'
-									: ''}"
-							>
-								<Icon icon="mdi:chevron-left" width="32" height="32" />
-							</button>
-
-							<button
-								on:click|stopPropagation={nextImage}
-								class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-opacity {currentImageIndex ===
-								plant.images.length - 1
-									? 'hidden'
-									: ''}"
-							>
-								<Icon icon="mdi:chevron-right" width="32" height="32" />
-							</button>
-						{/if}
+					<div
+						class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+					>
+						<div class="flex gap-4 p-4 min-w-full">
+							{#each plant.images as image, index}
+								<button
+									class="relative w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] flex-shrink-0"
+									on:click={() => {
+										currentImageIndex = index;
+										toggleModal();
+									}}
+								>
+									<img
+										src={image}
+										alt={`${plant.name} - Image ${index + 1}`}
+										class="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
+									/>
+								</button>
+							{/each}
+						</div>
 					</div>
 				{:else}
 					<div class="relative w-full" style="height: min(33vh, 400px);">
