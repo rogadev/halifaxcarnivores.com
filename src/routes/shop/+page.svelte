@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import PlantList from './PlantList.svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '$lib/supabase';
 	import { browser } from '$app/environment';
 
 	let plants: any[] = [];

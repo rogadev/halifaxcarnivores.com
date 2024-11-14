@@ -1,26 +1,21 @@
-export interface Plant {
+import type { Pot } from '@prisma/client';
+
+export type DisplayedPlantItem = {
   id: number;
   name: string;
-  genus: string;
-  species: string;
-  unique: string;
-  price: number;
-  salePrice: number;
-  cost: number;
-  quantity: number;
-  new: boolean;
-  onSale: boolean;
+  description: string;
+  tags: string[];
+  featuredImage?: string;
   images: string[];
-  description?: string;
+  minPrice: number;
+  maxPrice: number;
+  isNewItem: boolean;
+  isOnSale: boolean;
+  isComingSoon: boolean;
+  pots: Pot[];
   water?: string;
   light?: string;
   temperature?: string;
   humidity?: string;
   seasonality?: string;
-  climateZoneId: number;
-  climateZone: {
-    id: number;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-} 
+};

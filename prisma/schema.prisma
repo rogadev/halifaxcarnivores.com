@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model batches {
+model Batch {
   id                      Int       @id @default(autoincrement())
   vendorId                Int
   name                    String?   @unique
@@ -23,13 +23,14 @@ model batches {
   costPerItem             Float     @default(0)
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @default(now())
-  vendors                 vendors   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  pots                    pots[]
+  vendor                  Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  pots                    Pot[]
 
+  @@map("batches")
   @@index([vendorId])
 }
 
-model plants {
+model Plant {
   id            Int      @id @default(autoincrement())
   genus         String?
   species       String?
@@ -46,11 +47,13 @@ model plants {
   images        String[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
-  pots          pots[]
-  tags          tags[]   @relation("PlantToTag")
+  pots          Pot[]
+  tags          Tag[]    @relation("PlantToTag")
+
+  @@map("plants")
 }
 
-model pots {
+model Pot {
   id             Int      @id @default(autoincrement())
   plantId        Int
   size           String?
@@ -64,26 +67,31 @@ model pots {
   batchId        Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
-  batches        batches  @relation(fields: [batchId], references: [id], onDelete: Cascade)
-  plants         plants   @relation(fields: [plantId], references: [id])
+  batch          Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  plant          Plant    @relation(fields: [plantId], references: [id])
 
+  @@map("pots")
   @@index([batchId])
   @@index([plantId])
 }
 
-model tags {
+model Tag {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  plants    plants[] @relation("PlantToTag")
+  plants    Plant[]  @relation("PlantToTag")
+
+  @@map("tags")
 }
 
-model vendors {
-  id          Int       @id @default(autoincrement())
+model Vendor {
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
-  batches     batches[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  batches     Batch[]
+
+  @@map("vendors")
 }

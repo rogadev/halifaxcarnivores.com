@@ -1,196 +1,170 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { supabase } from '$lib/supabaseClient';
 	import Icon from '@iconify/svelte';
-	import type { Plant } from '$lib/types';
+	import type { DisplayedPlantItem } from '$lib/types.ts';
 
-	let plant: Plant | null = null;
+	export let data: { plant: DisplayedPlantItem };
+	const { plant } = data;
+
 	let currentImageIndex = 0;
-	let showPopover = false;
-	let loading = true;
-	let error: string | null = null;
 	let showModal = false;
-
-	async function fetchPlant() {
-		try {
-			const { data, error: err } = await supabase
-				.from('Plant')
-				.select('*')
-				.eq('id', $page.params.id)
-				.single();
-
-			if (err) throw err;
-			plant = data;
-		} catch (e) {
-			error = (e as Error).message;
-		} finally {
-			loading = false;
-		}
-	}
-
-	function nextImage() {
-		if (plant?.images && currentImageIndex < plant.images.length - 1) {
-			currentImageIndex++;
-		}
-	}
-
-	function previousImage() {
-		if (currentImageIndex > 0) {
-			currentImageIndex--;
-		}
-	}
 
 	function toggleModal() {
 		showModal = !showModal;
 	}
-
-	onMount(() => {
-		fetchPlant();
-	});
 </script>
 
-{#if loading}
-	<div class="flex justify-center items-center min-h-screen">
-		<p class="text-xl">Loading plant details...</p>
-	</div>
-{:else if error}
-	<div class="flex justify-center items-center min-h-screen">
-		<p class="text-xl text-red-600">Error: {error}</p>
-	</div>
-{:else if plant}
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-		<div class="bg-white rounded-lg shadow-lg overflow-hidden">
-			<div>
-				{#if plant.images && plant.images.length > 0}
-					<div
-						class="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
-					>
-						<div class="flex gap-4 p-4 min-w-full">
-							{#each plant.images as image, index}
-								<button
-									class="relative w-[150px] sm:w-[200px] h-[150px] sm:h-[200px] flex-shrink-0"
-									on:click={() => {
-										currentImageIndex = index;
-										toggleModal();
-									}}
-								>
-									<img
-										src={image}
-										alt={`${plant.name} - Image ${index + 1}`}
-										class="w-full h-full object-cover rounded-lg transition-transform duration-200 hover:scale-105"
-									/>
-								</button>
-							{/each}
-						</div>
-					</div>
-				{:else}
-					<div class="relative w-full" style="height: min(33vh, 400px);">
-						<div class="w-full h-full bg-green-700 flex items-center justify-center">
-							<Icon icon="mdi:plant" class="text-white" width="48" height="48" />
-						</div>
-					</div>
-				{/if}
-			</div>
-
-			{#if showModal && plant.images && plant.images.length > 0}
-				<button
-					class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
-					on:click={toggleModal}
-				>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+		<!-- Image Gallery Section -->
+		<div class="space-y-4">
+			{#if plant.images.length > 0}
+				<div class="aspect-square rounded-lg overflow-hidden bg-gray-100">
 					<img
 						src={plant.images[currentImageIndex]}
 						alt={plant.name}
-						class="max-h-[90vh] max-w-[90vw] object-contain"
+						class="w-full h-full object-cover"
 					/>
-				</button>
+				</div>
+				<div class="grid grid-cols-4 gap-2">
+					{#each plant.images as image, index}
+						<button
+							class="aspect-square rounded-md overflow-hidden {currentImageIndex === index
+								? 'ring-2 ring-primary'
+								: ''}"
+							on:click={() => (currentImageIndex = index)}
+						>
+							<img src={image} alt="" class="w-full h-full object-cover" />
+						</button>
+					{/each}
+				</div>
+			{:else}
+				<div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center">
+					<Icon icon="mdi:plant" class="text-gray-400" width="64" height="64" />
+				</div>
 			{/if}
+		</div>
 
-			<div class="p-8">
-				<div class="flex justify-between items-start mb-6">
-					<div>
-						<h1 class="text-3xl font-bold text-gray-900">
-							{plant.genus}
-							{plant.species}
-							<span class="text-2xl">{plant.unique}</span>
-						</h1>
-						<p class="text-lg text-gray-600 mt-2">{plant.name}</p>
-					</div>
-					<div class="text-right">
-						{#if plant.onSale}
-							<p class="text-2xl font-bold text-red-600">${plant.salePrice.toFixed(2)}</p>
-							<p class="text-lg text-gray-500 line-through">${plant.price.toFixed(2)}</p>
-						{:else}
-							<p class="text-2xl font-bold text-gray-900">${plant.price.toFixed(2)}</p>
-						{/if}
-						{#if plant.new}
-							<span class="inline-block bg-green-500 text-white text-sm px-3 py-1 rounded-full mt-2"
-								>New</span
+		<!-- Product Info Section -->
+		<div class="space-y-6">
+			<div>
+				<div class="flex items-start justify-between">
+					<h1 class="text-3xl font-bold text-gray-900">{plant.name}</h1>
+					<div class="flex gap-2">
+						{#if plant.isNewItem}
+							<span
+								class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
 							>
+								New
+							</span>
+						{/if}
+						{#if plant.isComingSoon}
+							<span
+								class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+							>
+								Coming Soon
+							</span>
 						{/if}
 					</div>
 				</div>
 
-				{#if plant.description}
-					<div class="mb-6">
-						<h2 class="text-xl font-semibold mb-2">Description</h2>
-						<p class="text-gray-700">{plant.description}</p>
-					</div>
-				{/if}
+				<div class="mt-4">
+					{#if plant.isOnSale}
+						<p class="text-3xl font-bold text-red-600">
+							${plant.minPrice.toFixed(2)} - ${plant.maxPrice.toFixed(2)}
+						</p>
+					{:else}
+						<p class="text-3xl font-bold text-gray-900">
+							${plant.minPrice.toFixed(2)} - ${plant.maxPrice.toFixed(2)}
+						</p>
+					{/if}
+				</div>
+			</div>
 
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+			<!-- Tags -->
+			{#if plant.tags.length > 0}
+				<div class="flex flex-wrap gap-2">
+					{#each plant.tags as tag}
+						<span class="px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800">
+							{tag}
+						</span>
+					{/each}
+				</div>
+			{/if}
+
+			<!-- Description -->
+			{#if plant.description}
+				<div>
+					<h2 class="text-lg font-semibold mb-2">About this plant</h2>
+					<p class="text-gray-700 leading-relaxed">{plant.description}</p>
+				</div>
+			{/if}
+
+			<!-- Care Instructions -->
+			<div class="border rounded-lg p-6 bg-gray-50 space-y-4">
+				<h2 class="text-lg font-semibold">Care Instructions</h2>
+				<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 					{#if plant.water}
 						<div>
-							<h3 class="font-semibold mb-1">Water Requirements</h3>
-							<p class="text-gray-700">{plant.water}</p>
+							<div class="flex items-center gap-2">
+								<Icon icon="mdi:water" class="text-blue-500" />
+								<h3 class="font-medium">Water</h3>
+							</div>
+							<p class="text-gray-600 mt-1">{plant.water}</p>
 						</div>
 					{/if}
 					{#if plant.light}
 						<div>
-							<h3 class="font-semibold mb-1">Light Requirements</h3>
-							<p class="text-gray-700">{plant.light}</p>
+							<div class="flex items-center gap-2">
+								<Icon icon="mdi:white-balance-sunny" class="text-yellow-500" />
+								<h3 class="font-medium">Light</h3>
+							</div>
+							<p class="text-gray-600 mt-1">{plant.light}</p>
 						</div>
 					{/if}
 					{#if plant.temperature}
 						<div>
-							<h3 class="font-semibold mb-1">Temperature</h3>
-							<p class="text-gray-700">{plant.temperature}</p>
+							<div class="flex items-center gap-2">
+								<Icon icon="mdi:thermometer" class="text-red-500" />
+								<h3 class="font-medium">Temperature</h3>
+							</div>
+							<p class="text-gray-600 mt-1">{plant.temperature}</p>
 						</div>
 					{/if}
 					{#if plant.humidity}
 						<div>
-							<h3 class="font-semibold mb-1">Humidity</h3>
-							<p class="text-gray-700">{plant.humidity}</p>
-						</div>
-					{/if}
-				</div>
-
-				<div class="relative">
-					<button
-						on:mouseenter={() => (showPopover = true)}
-						on:mouseleave={() => (showPopover = false)}
-						class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 hover:bg-gray-700 h-10 px-4 py-2 text-white"
-					>
-						<Icon
-							icon={showPopover ? 'mdi:cart-off' : 'mdi:cart-plus'}
-							width="20"
-							height="20"
-							class="mr-2"
-						/>
-						Add to Cart
-					</button>
-					{#if showPopover}
-						<div
-							class="absolute bottom-full left-0 mb-2 w-48 bg-gray-800 text-white text-sm rounded-md p-2 shadow-lg"
-						>
-							<p>Shopping cart functionality coming soon!</p>
-							<div
-								class="absolute bottom-0 left-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-gray-800"
-							/>
+							<div class="flex items-center gap-2">
+								<Icon icon="mdi:water-percent" class="text-green-500" />
+								<h3 class="font-medium">Humidity</h3>
+							</div>
+							<p class="text-gray-600 mt-1">{plant.humidity}</p>
 						</div>
 					{/if}
 				</div>
 			</div>
+
+			<!-- Add to Cart -->
+			<button
+				class="w-full py-3 px-4 rounded-lg bg-primary text-white font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
+				disabled={plant.isComingSoon}
+			>
+				{plant.isComingSoon ? 'Coming Soon' : 'Add to Cart'}
+			</button>
 		</div>
 	</div>
+</div>
+
+<!-- Image Modal -->
+{#if showModal}
+	<button
+		type="button"
+		class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 w-full border-0"
+		on:click={toggleModal}
+	>
+		<img
+			src={plant.images[currentImageIndex]}
+			alt={plant.name}
+			class="max-h-[90vh] max-w-[90vw] object-contain"
+		/>
+	</button>
 {/if}

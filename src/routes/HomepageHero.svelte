@@ -60,7 +60,9 @@
 						<h2 class="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl">
 							Your Local Source for Exotic Carnivorous Plants and More in Halifax and Dartmouth
 						</h2>
-						<p class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
+						<p
+							class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none before:absolute before:-inset-4 before:block before:rounded-lg before:bg-gradient-to-r before:from-white/0 before:via-white/95 before:to-white/0 before:-z-10 before:sm:hidden"
+						>
 							Discover the fascinating world of carnivorous plants with Halifax Carnivores, your
 							go-to destination for rare and exotic insect-eating flora like Venus Flytraps,
 							Sarracenia, Nepenthes, and Drosera. More than just a plant shop, we're a vibrant
