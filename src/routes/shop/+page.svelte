@@ -1,20 +1,45 @@
 <script lang="ts">
-	import OurShopSection from '$lib/components/OurShopSection/index.svelte';
-	import UnderConstruction from '$lib/components/UnderConstruction.svelte';
+	import { onMount } from 'svelte';
+	import PlantList from './PlantList.svelte';
+	import { supabase } from '$lib/supabaseClient';
+	import { browser } from '$app/environment';
+
+	let plants: any[] = [];
+	let loading = true;
+	let error: string | null = null;
+
+	async function fetchPlants() {
+		try {
+			const { data, error: err } = await supabase.from('plants').select('*');
+
+			if (err) {
+				throw err;
+			}
+
+			plants = data || [];
+		} catch (e) {
+			error = (e as Error).message;
+		} finally {
+			loading = false;
+		}
+	}
+
+	onMount(() => {
+		if (browser) {
+			fetchPlants();
+		}
+	});
 </script>
 
-<svelte:head>
-	<title>Shop Carnivorous Plants in Halifax - Halifax Carnivores</title>
-	<meta
-		name="description"
-		content="Explore a diverse range of carnivorous plants at Halifax Carnivores Shop. Browse through our new arrivals, top sellers, and a vast variety of plant categories including Nepenthes, Drosera, and more. Start filling your cart with unique finds and get everything you need to embrace your inner botanist. Your gateway to the exotic plant world is just a click away."
-	/>
-	<meta
-		name="keywords"
-		content="Carnivorous plants shop, buy plants Halifax, Nepenthes for sale, Drosera for sale, top plant sellers Halifax, carnivorous plants Halifax, tropical plant shop, carnivorous plants, highland Nepenthes store, lowland Nepenthes market, Halifax plant purchase, online plant store Halifax"
-	/>
-</svelte:head>
-
-<div class="px-8 py-4">
-	<OurShopSection />
-</div>
+{#if loading}
+	<p>Loading plants...</p>
+{:else if error}
+	<p class="error">Error: {error}</p>
+{:else if plants.length === 0}
+	<div class="text-center py-12">
+		<p class="text-lg text-gray-600">No plants are currently available.</p>
+		<p class="text-sm text-gray-500 mt-2">Please check back later for new inventory!</p>
+	</div>
+{:else}
+	<PlantList {plants} />
+{/if}

@@ -6,6 +6,8 @@
 
 <div class="min-h-full">
 	<Navbar />
-	<slot />
+	<main class="min-h-[100vh]">
+		<slot />
+	</main>
 	<Footer />
 </div>

@@ -1,78 +1,41 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-
 	import Icon from '@iconify/svelte';
 	import Link from './NavbarLink.svelte';
 	import ProfileLink from './NavbarProfileLink.svelte';
 	import MobileDropdownMenu from './MobileDropdownMenu.svelte';
 
-	const user = false;
-	let path: string;
-	page.subscribe((value) => (path = value.url.pathname));
+	const user = false; // Later, we'll have users that can fill carts
+
+	$: path = $page.url.pathname;
+
 	const links = [
-		{
-			name: 'Halifax Carnivores',
-			href: '/'
-		},
-		{
-			name: 'About',
-			href: '/about-us'
-		},
-		{
-			name: 'Shop',
-			href: '/shop'
-		},
-		{
-			name: 'Care',
-			href: '/plant-care-guides'
-		},
-		{
-			name: 'Blog',
-			href: '/blog'
-		},
-		{
-			name: 'Contact',
-			href: '/contact'
-		},
-		{
-			name: 'FAQ',
-			href: '/faq'
-		},
-		{
-			name: 'Events',
-			href: '/events'
-		}
+		{ name: 'Home', href: '/' },
+		{ name: 'About', href: '/about-us' },
+		{ name: 'Shop', href: '/shop' },
+		{ name: 'Care', href: '/plant-care-guides' },
+		{ name: 'Blog', href: '/blog' },
+		{ name: 'Contact', href: '/contact' },
+		{ name: 'FAQ', href: '/faq' },
+		{ name: 'Events', href: '/events' }
 	];
+
 	const profileLinks = [
-		{
-			name: 'Your Profile',
-			href: '/profile'
-		},
-		{
-			name: 'Settings',
-			href: '/settings'
-		},
-		{
-			name: 'Sign out',
-			href: '/logout'
-		}
+		{ name: 'Your Profile', href: '/profile' },
+		{ name: 'Settings', href: '/settings' },
+		{ name: 'Sign out', href: '/logout' }
 	];
 
 	let showMobileMenu = false;
 	let showProfileMenu = false;
 	let previousPath: string;
 
-	$: {
-		if (path !== previousPath) {
-			showMobileMenu = false;
-			showProfileMenu = false;
-		}
-	}
-
-	onMount(() => {
+	$: if (path !== previousPath) {
+		showMobileMenu = false;
+		showProfileMenu = false;
 		previousPath = path;
-	});
+	}
 </script>
 
 <nav class="bg-gray-800 sticky top-0 z-50">
@@ -83,7 +46,7 @@
 					type="button"
 					class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 					aria-controls="mobile-menu"
-					aria-expanded="false"
+					aria-expanded={showMobileMenu}
 					on:click={() => (showMobileMenu = !showMobileMenu)}
 				>
 					<span class="absolute -inset-0.5" />
@@ -120,6 +83,7 @@
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<a href="/" class="flex flex-shrink-0 items-center">
 					<img class="h-8 w-auto rounded" src="/logo/large.webp" alt="Halifax Carnivores" />
+					<span class="ml-2 text-white font-bold text-lg">Halifax Carnivores</span>
 				</a>
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
@@ -159,7 +123,7 @@
 								type="button"
 								class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 								id="user-menu-button"
-								aria-expanded="false"
+								aria-expanded={showProfileMenu}
 								aria-haspopup="true"
 								on:click={() => (showProfileMenu = !showProfileMenu)}
 							>

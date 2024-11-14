@@ -1,5 +1,40 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	export let title: string = 'Coming Soon...';
+
+	const plantImages = [
+		'/img/plants/ampularia-2.jpg',
+		'/img/plants/ampularia-eating-fly.jpg',
+		'/img/plants/ampularia.jpg',
+		'/img/plants/bog-garden.jpg',
+		'/img/plants/drosera-capensis-alba-eating.jpg',
+		'/img/plants/forked-sundew.jpg',
+		'/img/plants/nepenthes-2.jpg',
+		'/img/plants/nepenthes-3.jpg',
+		'/img/plants/nepenthes-pitcher.jpg',
+		'/img/plants/nepenthes.jpg',
+		'/img/plants/pinguicula-esseriana.jpg',
+		'/img/plants/pinguicula-formosa.jpg',
+		'/img/plants/pinguicula-hybrid.jpg',
+		'/img/plants/pitcher-plant-2.jpg',
+		'/img/plants/pitcher-plant.jpg',
+		'/img/plants/purpurea.jpg',
+		'/img/plants/sarracenia.jpg',
+		'/img/plants/sarracenia-2.jpg',
+		'/img/plants/small-nepenthes.jpg',
+		'/img/plants/sticky-sundew.jpg',
+		'/img/plants/stripy-nepenthes.jpg',
+		'/img/plants/tricolor-ampularia.jpg',
+		'/img/plants/tricolor-ampularia-2.jpg',
+		'/img/plants/venus-flytrap.jpg'
+	];
+
+	let randomImage: string | undefined;
+
+	onMount(() => {
+		randomImage = plantImages[Math.floor(Math.random() * plantImages.length)];
+	});
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
@@ -7,11 +42,7 @@
 
 	<div class="relative overflow-hidden rounded-lg">
 		<div class="absolute inset-0">
-			<img
-				src="https://tailwindui.com/img/ecommerce-images/home-page-01-feature-section-01.jpg"
-				alt=""
-				class="h-full w-full object-cover object-center"
-			/>
+			<img src={randomImage} alt="" class="h-full w-full object-cover object-center" />
 		</div>
 		<div class="relative bg-gray-900 bg-opacity-75 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
 			<div class="relative mx-auto flex max-w-3xl flex-col items-center text-center">
