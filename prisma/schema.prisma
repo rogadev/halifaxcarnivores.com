@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model batches {
+  id                      Int       @id @default(autoincrement())
+  vendorId                Int
+  name                    String?   @unique
+  quantity                Int       @default(0)
+  arrivalDate             DateTime  @default(now())
+  isAcclimating           Boolean   @default(false)
+  expectedReadyDate       DateTime?
+  acclimationNotes        String?
+  acclimationDurationDays Int?
+  eachCost                Float?
+  batchCost               Float?
+  costPerItem             Float     @default(0)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @default(now())
+  vendors                 vendors   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  pots                    pots[]
+
+  @@index([vendorId])
+}
+
+model plants {
+  id            Int      @id @default(autoincrement())
+  genus         String?
+  species       String?
+  cultivar      String?
+  variety       String?
+  name          String   @unique
+  description   String?
+  water         String?
+  light         String?
+  temperature   String?
+  humidity      String?
+  seasonality   String?
+  featuredImage String?
+  images        String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+  pots          pots[]
+  tags          tags[]   @relation("PlantToTag")
+}
+
+model pots {
+  id             Int      @id @default(autoincrement())
+  plantId        Int
+  size           String?
+  price          Float    @default(0)
+  salePrice      Float    @default(0)
+  cost           Float    @default(0)
+  isNewItem      Boolean  @default(false)
+  isOnSale       Boolean  @default(false)
+  isDiscontinued Boolean  @default(false)
+  isComingSoon   Boolean  @default(false)
+  batchId        Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+  batches        batches  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  plants         plants   @relation(fields: [plantId], references: [id])
+
+  @@index([batchId])
+  @@index([plantId])
+}
+
+model tags {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  plants    plants[] @relation("PlantToTag")
+}
+
+model vendors {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  batches     batches[]
+}
