@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Fuse from 'fuse.js';
 	import PlantItem from './PlantItem.svelte';
@@ -29,11 +31,15 @@
 		createdAt: Date;
 		updatedAt: Date;
 	}
-	export let plants: Plant[];
+	interface Props {
+		plants: Plant[];
+	}
 
-	let searchQuery = '';
-	let filteredPlants: Plant[] = [];
-	let fuse: Fuse<Plant>;
+	let { plants }: Props = $props();
+
+	let searchQuery = $state('');
+	let filteredPlants: Plant[] = $state([]);
+	let fuse: Fuse<Plant> = $state();
 
 	// Fuse.js options for searching
 	const fuseOptions = {
@@ -47,14 +53,14 @@
 		filteredPlants = plants;
 	});
 
-	$: {
+	run(() => {
 		if (fuse && searchQuery) {
 			const results = fuse.search(searchQuery);
 			filteredPlants = results.map((result) => result.item);
 		} else if (plants) {
 			filteredPlants = plants;
 		}
-	}
+	});
 </script>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

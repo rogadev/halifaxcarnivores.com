@@ -26,13 +26,17 @@
 		updatedAt: string;
 	};
 
-	export let product: Plant;
+	interface Props {
+		product: Plant;
+	}
+
+	let { product }: Props = $props();
 
 	let imageLoaded = false;
-	let imageError = false;
+	let imageError = $state(false);
 
 	// Get the full product name
-	$: productName = [product.genus, product.species, product.unique].filter(Boolean).join(' ');
+	let productName = $derived([product.genus, product.species, product.unique].filter(Boolean).join(' '));
 
 	// Preload the image
 	onMount(() => {
@@ -62,7 +66,7 @@
 				loading="lazy"
 				decoding="async"
 				fetchpriority="high"
-				on:error={() => (imageError = true)}
+				onerror={() => (imageError = true)}
 			/>
 		{:else}
 			<div class="min-h-full w-full bg-emerald-600 flex items-center justify-center">
@@ -82,7 +86,7 @@
 		<div class="mb-3">
 			<h3 class="text-sm text-gray-700">
 				<a href={`/plants/${product.id}`} class="hover:text-emerald-700 transition-colors">
-					<span aria-hidden="true" class="absolute inset-0" />
+					<span aria-hidden="true" class="absolute inset-0"></span>
 					{productName || product.name}
 				</a>
 			</h3>

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import BlogSectionArticle from './BlogSectionArticle.svelte';
 
-	export let articles = [
+	interface Props {
+		articles?: any;
+	}
+
+	let { articles = [
 		{
 			title: "The Enchanting World of Drosera: A Beginner's Guide",
 			description:
@@ -41,7 +45,7 @@
 				{ title: 'Plant Care Guide', link: '/category/plant-care-guide' }
 			]
 		}
-	];
+	] }: Props = $props();
 </script>
 
 <section id="blog">

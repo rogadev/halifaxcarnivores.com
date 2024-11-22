@@ -1,3 +1,21 @@
+## Data Structures
+
+### Prisma
+
+#### Overview
+
+We are using Prisma on the backend only to import data into our frontend UI.
+
+#### Data Structure
+
+Prisma is providing the data structure for our database. You can find the schema in the `schema.prisma` file.
+
+### Supabase
+
+We are using Supabase only to fetch images from the Supabase storage bucket, `images`.
+
+## Svelte
+
 I'm using svelte 5 instead of svelte 4 here is an overview of the changes.
 
 #### Overview

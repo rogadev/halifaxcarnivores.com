@@ -23,7 +23,7 @@ export const load: PageServerLoad = async ({ params }) => {
   });
 
   if (!plant) {
-    throw error(404, 'Plant not found');
+    error(404, 'Plant not found');
   }
 
   const extractName = (plant: Plant) => [plant.genus, plant.species, plant.cultivar, plant.variety]

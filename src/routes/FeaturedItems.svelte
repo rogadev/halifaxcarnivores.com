@@ -2,7 +2,11 @@
 	import Icon from '@iconify/svelte';
 	import type { DisplayedPlantItem } from '$lib/types';
 
-	export let plants: DisplayedPlantItem[];
+	interface Props {
+		plants: DisplayedPlantItem[];
+	}
+
+	let { plants }: Props = $props();
 </script>
 
 <section class="py-12">

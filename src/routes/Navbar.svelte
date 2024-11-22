@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
@@ -8,7 +10,7 @@
 
 	const user = false; // Later, we'll have users that can fill carts
 
-	$: path = $page.url.pathname;
+	let path = $derived($page.url.pathname);
 
 	const links = [
 		{ name: 'Home', href: '/' },
@@ -27,15 +29,17 @@
 		{ name: 'Sign out', href: '/logout' }
 	];
 
-	let showMobileMenu = false;
-	let showProfileMenu = false;
-	let previousPath: string;
+	let showMobileMenu = $state(false);
+	let showProfileMenu = $state(false);
+	let previousPath: string = $state();
 
-	$: if (path !== previousPath) {
-		showMobileMenu = false;
-		showProfileMenu = false;
-		previousPath = path;
-	}
+	run(() => {
+		if (path !== previousPath) {
+			showMobileMenu = false;
+			showProfileMenu = false;
+			previousPath = path;
+		}
+	});
 </script>
 
 <nav class="bg-gray-800 sticky top-0 z-50">
@@ -47,9 +51,9 @@
 					class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 					aria-controls="mobile-menu"
 					aria-expanded={showMobileMenu}
-					on:click={() => (showMobileMenu = !showMobileMenu)}
+					onclick={() => (showMobileMenu = !showMobileMenu)}
 				>
-					<span class="absolute -inset-0.5" />
+					<span class="absolute -inset-0.5"></span>
 					<span class="sr-only">Open main menu</span>
 					{#if !showMobileMenu}
 						<svg
@@ -111,7 +115,7 @@
 						type="button"
 						class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 					>
-						<span class="absolute -inset-1.5" />
+						<span class="absolute -inset-1.5"></span>
 						<span class="sr-only">View cart</span>
 						<Icon icon="mdi:cart" class="h-6 w-6" />
 					</button>
@@ -125,9 +129,9 @@
 								id="user-menu-button"
 								aria-expanded={showProfileMenu}
 								aria-haspopup="true"
-								on:click={() => (showProfileMenu = !showProfileMenu)}
+								onclick={() => (showProfileMenu = !showProfileMenu)}
 							>
-								<span class="absolute -inset-1.5" />
+								<span class="absolute -inset-1.5"></span>
 								<span class="sr-only">Open user menu</span>
 								<img
 									class="h-8 w-8 rounded-full"

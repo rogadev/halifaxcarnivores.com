@@ -3,11 +3,15 @@
 	import Icon from '@iconify/svelte';
 	import type { DisplayedPlantItem } from '$lib/types.ts';
 
-	export let data: { plant: DisplayedPlantItem };
+	interface Props {
+		data: { plant: DisplayedPlantItem };
+	}
+
+	let { data }: Props = $props();
 	const { plant } = data;
 
-	let currentImageIndex = 0;
-	let showModal = false;
+	let currentImageIndex = $state(0);
+	let showModal = $state(false);
 
 	function toggleModal() {
 		showModal = !showModal;
@@ -32,7 +36,7 @@
 							class="aspect-square rounded-md overflow-hidden {currentImageIndex === index
 								? 'ring-2 ring-primary'
 								: ''}"
-							on:click={() => (currentImageIndex = index)}
+							onclick={() => (currentImageIndex = index)}
 						>
 							<img src={image} alt="" class="w-full h-full object-cover" />
 						</button>
@@ -159,7 +163,7 @@
 	<button
 		type="button"
 		class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 w-full border-0"
-		on:click={toggleModal}
+		onclick={toggleModal}
 	>
 		<img
 			src={plant.images[currentImageIndex]}

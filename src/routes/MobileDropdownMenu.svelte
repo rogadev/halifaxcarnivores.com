@@ -1,7 +1,11 @@
 <script lang="ts">
 	import MobileLink from './NavbarMobileLink.svelte';
-	export let links: { name: string; href: string }[];
-	export let path: string;
+	interface Props {
+		links: { name: string; href: string }[];
+		path: string;
+	}
+
+	let { links, path }: Props = $props();
 </script>
 
 <div class="sm:hidden" id="mobile-menu">

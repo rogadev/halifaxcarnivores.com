@@ -1,19 +1,25 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Modal from './Modal.svelte';
 	import { enhance } from '$app/forms'; // Import enhance function
 
-	export let data: any;
+	interface Props {
+		data: any;
+	}
 
-	let hasError: boolean = false;
-	let feedbackMessage: string = '';
+	let { data }: Props = $props();
+
+	let hasError: boolean = $state(false);
+	let feedbackMessage: string = $state('');
 
 	// Control the modal's visibility
-	let showModal: boolean = false;
+	let showModal: boolean = $state(false);
 
 	// Variables for business hours
-	let showBusinessHours: boolean = false;
-	let currentTime: string = '';
+	let showBusinessHours: boolean = $state(false);
+	let currentTime: string = $state('');
 
 	function isBusinessHours(): boolean {
 		const now = new Date();
@@ -35,19 +41,23 @@
 	}
 
 	// Handle form submission result
-	$: if (data?.success) {
-		hasError = false;
-		showModal = true;
-		feedbackMessage = '';
-		alert('Your form has been submitted.');
-	}
+	run(() => {
+		if (data?.success) {
+			hasError = false;
+			showModal = true;
+			feedbackMessage = '';
+			alert('Your form has been submitted.');
+		}
+	});
 
-	$: if (data?.error) {
-		hasError = true;
-		feedbackMessage = data.errorMessage ?? data.error;
-		console.error(data);
-		alert('Something went wrong submitting your form./n' + data.error);
-	}
+	run(() => {
+		if (data?.error) {
+			hasError = true;
+			feedbackMessage = data.errorMessage ?? data.error;
+			console.error(data);
+			alert('Something went wrong submitting your form./n' + data.error);
+		}
+	});
 
 	// Function to handle modal close
 	function handleCloseModal() {
@@ -225,7 +235,7 @@
 								id="message"
 								rows="4"
 								class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-							/>
+							></textarea>
 						</div>
 					</div>
 				</div>

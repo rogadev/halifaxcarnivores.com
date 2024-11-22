@@ -3,7 +3,7 @@
 	import { supabase } from '$lib/supabase';
 	import { onMount } from 'svelte';
 
-	let plants: any[] = [];
+	let plants: any[] = $state([]);
 
 	onMount(async () => {
 		const { data, error } = await supabase

@@ -1,13 +1,25 @@
 <script lang="ts">
-	export let title: string;
-	export let description: string;
-	export let date: string;
-	export let datetime: string;
-	export let link: string;
-	export let author: { name: string; title: string; image: string };
-	export let categories: { title: string; link: string; primary?: boolean }[];
+	interface Props {
+		title: string;
+		description: string;
+		date: string;
+		datetime: string;
+		link: string;
+		author: { name: string; title: string; image: string };
+		categories: { title: string; link: string; primary?: boolean }[];
+	}
 
-	$: primaryCategory = categories.find((category) => category.primary);
+	let {
+		title,
+		description,
+		date,
+		datetime,
+		link,
+		author,
+		categories
+	}: Props = $props();
+
+	let primaryCategory = $derived(categories.find((category) => category.primary));
 </script>
 
 <article class="flex max-w-xl flex-col items-start justify-between">
@@ -24,7 +36,7 @@
 	<div class="group relative">
 		<h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
 			<a href={link}>
-				<span class="absolute inset-0" />
+				<span class="absolute inset-0"></span>
 				{title}
 			</a>
 		</h3>
@@ -36,7 +48,7 @@
 		<img src={author.image} alt="" class="h-10 w-10 rounded-full bg-gray-50" />
 		<div class="text-sm leading-6">
 			<p class="font-semibold text-gray-900">
-				<span class="absolute inset-0" />
+				<span class="absolute inset-0"></span>
 				{author.name}
 			</p>
 			<p class="text-gray-600">{author.title}</p>

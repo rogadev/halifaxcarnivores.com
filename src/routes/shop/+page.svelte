@@ -4,9 +4,9 @@
 	import { supabase } from '$lib/supabase';
 	import { browser } from '$app/environment';
 
-	let plants: any[] = [];
-	let loading = true;
-	let error: string | null = null;
+	let plants: any[] = $state([]);
+	let loading = $state(true);
+	let error: string | null = $state(null);
 
 	async function fetchPlants() {
 		try {

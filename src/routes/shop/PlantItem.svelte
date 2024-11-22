@@ -4,9 +4,13 @@
 	import { onMount } from 'svelte';
 	import type { Plant } from '$lib/types';
 
-	export let plantItem: Plant;
-	let showMessage = false;
-	let showPopover = false;
+	interface Props {
+		plantItem: Plant;
+	}
+
+	let { plantItem }: Props = $props();
+	let showMessage = $state(false);
+	let showPopover = $state(false);
 
 	// Preload both cart icons
 	onMount(() => {
@@ -67,16 +71,16 @@
 
 		<div class="mt-auto flex gap-3 items-center">
 			<button
-				on:click={handleLearnMore}
+				onclick={handleLearnMore}
 				class="flex-grow inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 hover:bg-gray-700 h-10 px-4 py-2 text-white"
 			>
 				Learn More
 			</button>
 			<div class="relative">
 				<button
-					on:mouseenter={() => (showPopover = true)}
-					on:mouseleave={() => (showPopover = false)}
-					on:click={handleAddToCart}
+					onmouseenter={() => (showPopover = true)}
+					onmouseleave={() => (showPopover = false)}
+					onclick={handleAddToCart}
 					class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-gray-200 hover:text-gray-600 h-10 w-10 relative"
 					aria-label="Add to cart (coming soon)"
 				>
@@ -94,7 +98,7 @@
 						<p>Shopping cart functionality coming soon!</p>
 						<div
 							class="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-gray-800"
-						/>
+						></div>
 					</div>
 				{/if}
 			</div>

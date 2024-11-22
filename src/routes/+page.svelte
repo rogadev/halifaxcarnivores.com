@@ -8,7 +8,11 @@
 	import FeaturedItems from './FeaturedItems.svelte';
 
 	// Add the data prop from the server
-	export let data;
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 	const { plants } = data;
 
 	// Calculate next Friday's date (not tomorrow, but the following Friday)
@@ -31,7 +35,7 @@
 		isDismissed = localStorage.getItem('bannerDismissed') === 'true';
 	}
 
-	let showBanner = today < nextFriday && !isDismissed;
+	let showBanner = $state(today < nextFriday && !isDismissed);
 
 	function dismissBanner() {
 		isDismissed = true;
@@ -63,7 +67,7 @@
 						<div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
 							<button
 								type="button"
-								on:click={dismissBanner}
+								onclick={dismissBanner}
 								class="flex rounded-md p-2 hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
 								aria-label="Dismiss banner"
 							>

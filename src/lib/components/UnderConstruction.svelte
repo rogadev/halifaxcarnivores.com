@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
-	export let title: string = 'Coming Soon...';
+	interface Props {
+		title?: string;
+	}
+
+	let { title = 'Coming Soon...' }: Props = $props();
 
 	const plantImages = [
 		'/img/plants/ampularia-2.jpg',
@@ -30,7 +34,7 @@
 		'/img/plants/venus-flytrap.jpg'
 	];
 
-	let randomImage: string | undefined;
+	let randomImage: string | undefined = $state();
 
 	onMount(() => {
 		randomImage = plantImages[Math.floor(Math.random() * plantImages.length)];
