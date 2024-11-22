@@ -8,90 +8,142 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Batch {
-  id                      Int       @id @default(autoincrement())
-  vendorId                Int
-  name                    String?   @unique
-  quantity                Int       @default(0)
-  arrivalDate             DateTime  @default(now())
-  isAcclimating           Boolean   @default(false)
-  expectedReadyDate       DateTime?
-  acclimationNotes        String?
-  acclimationDurationDays Int?
-  eachCost                Float?
-  batchCost               Float?
-  costPerItem             Float     @default(0)
-  createdAt               DateTime  @default(now())
-  updatedAt               DateTime  @default(now())
-  vendor                  Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  pots                    Pot[]
-
-  @@map("batches")
-  @@index([vendorId])
-}
-
 model Plant {
-  id            Int      @id @default(autoincrement())
-  genus         String?
-  species       String?
-  cultivar      String?
-  variety       String?
-  name          String   @unique
-  description   String?
-  water         String?
-  light         String?
-  temperature   String?
-  humidity      String?
-  seasonality   String?
-  featuredImage String?
-  images        String[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now())
-  pots          Pot[]
-  tags          Tag[]    @relation("PlantToTag")
+  id                Int                @id @default(autoincrement())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime
+  displayName       String             @unique
+  genus             String?
+  species           String?
+  cultivar          String?
+  variety           String?
+  size              String?
+  description       String?
+  currentSize       Int?
+  price             Decimal?           @db.Decimal(10, 2)
+  salePrice         Decimal?           @db.Decimal(10, 2)
+  isPublished       Boolean            @default(true)
+  isDiscontinued    Boolean            @default(false)
+  qtyAvailable      Int                @default(0)
+  qtyAcclimating    Int                @default(0)
+  qtyQuarantine     Int                @default(0)
+  qtyOrdered        Int                @default(0)
+  qtyLost           Int                @default(0)
+  qtyOther          Int                @default(0)
+  careLight         String?
+  careWater         String?
+  careHumidity      String?
+  careTemperature   String?
+  maxSize           Int?
+  petFriendly       Boolean            @default(false)
+  popularityScore   Int?
+  acclimationDate   DateTime?
+  acclimationNotes  String?
+  featuredImage     String?
+  isOnSale          Boolean            @default(false)
+  ProductManagement ProductManagement?
 
-  @@map("plants")
+  @@index([isPublished, isDiscontinued])
 }
 
-model Pot {
-  id             Int      @id @default(autoincrement())
-  plantId        Int
-  size           String?
-  price          Float    @default(0)
-  salePrice      Float    @default(0)
-  cost           Float    @default(0)
-  isNewItem      Boolean  @default(false)
-  isOnSale       Boolean  @default(false)
-  isDiscontinued Boolean  @default(false)
-  isComingSoon   Boolean  @default(false)
-  batchId        Int
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now())
-  batch          Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
-  plant          Plant    @relation(fields: [plantId], references: [id])
-
-  @@map("pots")
-  @@index([batchId])
-  @@index([plantId])
+model ProductManagement {
+  id            Int        @id @default(autoincrement())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime
+  costPrice     Decimal?   @db.Decimal(10, 2)
+  reorderPoint  Int        @default(5)
+  lastOrderDate DateTime?
+  notes         String?
+  plantId       Int?       @unique
+  soilId        Int?       @unique
+  terrariumId   Int?       @unique
+  Plant         Plant?     @relation(fields: [plantId], references: [id])
+  Soil          Soil?      @relation(fields: [soilId], references: [id])
+  Terrarium     Terrarium? @relation(fields: [terrariumId], references: [id])
 }
 
-model Tag {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  plants    Plant[]  @relation("PlantToTag")
+model Sale {
+  id          String     @id
+  totalAmount Decimal    @db.Decimal(10, 2)
+  notes       String?
+  date        DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime
+  SaleItem    SaleItem[]
 
-  @@map("tags")
+  @@index([date])
 }
 
-model Vendor {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
+model SaleItem {
+  id          String   @id
+  saleId      String
+  plantId     Int?
+  soilId      Int?
+  terrariumId Int?
+  quantity    Int
+  price       Decimal  @db.Decimal(10, 2)
+  cost        Decimal  @db.Decimal(10, 2)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  batches     Batch[]
+  updatedAt   DateTime
+  Sale        Sale     @relation(fields: [saleId], references: [id])
 
-  @@map("vendors")
+  @@index([plantId])
+  @@index([saleId])
+  @@index([soilId])
+  @@index([terrariumId])
+}
+
+model Soil {
+  id                Int                @id @default(autoincrement())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime
+  name              String
+  sku               String             @unique
+  slug              String             @unique
+  description       String
+  images            String[]
+  thumbnail         String?
+  price             Decimal            @db.Decimal(10, 2)
+  salePrice         Decimal?           @db.Decimal(10, 2)
+  stock             Int                @default(0)
+  isPublished       Boolean            @default(false)
+  weight            Decimal            @db.Decimal(10, 2)
+  composition       String[]
+  ph                Decimal?           @db.Decimal(3, 1)
+  organicMatter     Boolean            @default(false)
+  drainageRating    String
+  nutrients         String[]
+  ProductManagement ProductManagement?
+
+  @@index([isPublished])
+  @@index([sku])
+  @@index([slug])
+}
+
+model Terrarium {
+  id                Int                @id @default(autoincrement())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime
+  name              String
+  sku               String             @unique
+  slug              String             @unique
+  description       String
+  images            String[]
+  thumbnail         String?
+  price             Decimal            @db.Decimal(10, 2)
+  salePrice         Decimal?           @db.Decimal(10, 2)
+  stock             Int                @default(0)
+  isPublished       Boolean            @default(false)
+  dimensions        Json
+  glassThickness    Decimal            @db.Decimal(3, 1)
+  material          String
+  style             String
+  features          String[]
+  includedItems     String[]
+  customizable      Boolean            @default(false)
+  ProductManagement ProductManagement?
+
+  @@index([isPublished])
+  @@index([sku])
+  @@index([slug])
 }
