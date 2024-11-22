@@ -1,21 +1,24 @@
-import type { Pot } from '@prisma/client';
+import type { Plant } from '@prisma/client';
 
-export type DisplayedPlantItem = {
-  id: number;
-  name: string;
-  description: string;
-  tags: string[];
-  featuredImage?: string;
-  images: string[];
-  minPrice: number;
-  maxPrice: number;
-  isNewItem: boolean;
-  isOnSale: boolean;
+export type DisplayedPlantItem = Pick<
+  Plant,
+  | 'id'
+  | 'displayName'
+  | 'description'
+  | 'featuredImage'
+  | 'price'
+  | 'salePrice'
+  | 'isOnSale'
+  | 'careLight'
+  | 'careWater'
+  | 'careHumidity'
+  | 'careTemperature'
+  | 'size'
+  | 'currentSize'
+  | 'maxSize'
+  | 'petFriendly'
+> & {
+  // Derived fields not directly from Plant model
   isComingSoon: boolean;
-  pots: Pot[];
-  water?: string;
-  light?: string;
-  temperature?: string;
-  humidity?: string;
-  seasonality?: string;
+  isNewItem: boolean;
 };

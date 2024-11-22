@@ -1,12 +1,23 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { DisplayedPlantItem } from '$lib/types';
+	import { supabase } from '$lib/supabase';
 
-	interface Props {
-		plants: DisplayedPlantItem[];
+	let { plants }: { plants: DisplayedPlantItem[] } = $props();
+
+	// Function to get the first image from Supabase storage for a plant
+	async function getFirstPlantImage(plantId: number) {
+		const { data: files, error } = await supabase.storage.from('images').list(`plants/${plantId}`);
+
+		if (error || !files?.length) return null;
+
+		const firstImage = files[0];
+		const {
+			data: { publicUrl }
+		} = supabase.storage.from('images').getPublicUrl(`plants/${plantId}/${firstImage.name}`);
+
+		return publicUrl;
 	}
-
-	let { plants }: Props = $props();
 </script>
 
 <section class="py-12">
@@ -19,25 +30,37 @@
 		{#each plants as plant}
 			<div class="bg-white rounded-lg shadow-md overflow-hidden">
 				{#if plant.featuredImage}
-					<img src={plant.featuredImage} alt={plant.name} class="w-full h-64 object-cover" />
-				{:else if plant.images && plant.images[0]}
-					<img src={plant.images[0]} alt={plant.name} class="w-full h-64 object-cover" />
+					<img src={plant.featuredImage} alt={plant.displayName} class="w-full h-64 object-cover" />
 				{:else}
-					<div class="w-full h-64 bg-amber-100 flex items-center justify-center">
-						<Icon icon="mdi:plant" class="w-16 h-16 text-amber-600" />
-					</div>
+					{#await getFirstPlantImage(plant.id)}
+						<div class="w-full h-64 bg-amber-100 flex items-center justify-center">
+							<Icon icon="mdi:loading" class="w-16 h-16 text-amber-600 animate-spin" />
+						</div>
+					{:then imageUrl}
+						{#if imageUrl}
+							<img src={imageUrl} alt={plant.displayName} class="w-full h-64 object-cover" />
+						{:else}
+							<div class="w-full h-64 bg-amber-100 flex items-center justify-center">
+								<Icon icon="mdi:plant" class="w-16 h-16 text-amber-600" />
+							</div>
+						{/if}
+					{/await}
 				{/if}
 				<div class="p-6">
-					<h3 class="text-xl font-semibold text-gray-900">{plant.name}</h3>
+					<h3 class="text-xl font-semibold text-gray-900">{plant.displayName}</h3>
 					<p class="mt-2 text-gray-600">
-						{plant.description?.slice(0, 100)}...
+						{plant.description?.slice(
+							0,
+							100
+						)}{#if plant.description?.length && plant.description?.length > 100}...{/if}
 					</p>
 					<div class="mt-4 flex items-center justify-between">
 						<span class="text-lg font-bold text-green-600">
-							{#if plant.minPrice === plant.maxPrice}
-								${plant.minPrice}
+							{#if plant.isOnSale && plant.salePrice}
+								<span class="line-through text-gray-400 mr-2">${plant.price}</span>
+								${plant.salePrice}
 							{:else}
-								${plant.minPrice} - ${plant.maxPrice}
+								${plant.price}
 							{/if}
 						</span>
 						<a

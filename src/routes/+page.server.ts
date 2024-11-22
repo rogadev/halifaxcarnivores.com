@@ -1,78 +1,64 @@
 import { prisma } from '$lib/server/utils/prisma';
-import type { Plant, Pot, Tag } from '@prisma/client';
+import type { Plant } from '@prisma/client';
 import type { DisplayedPlantItem } from '$lib/types';
 
 export const load = async () => {
-  const featuredPlants = await prisma.plant.findMany({
-    include: {
-      pots: {
-        where: {
-          isDiscontinued: false,
-          OR: [
-            // Priority 1: New items in stock
-            {
-              isNewItem: true,
-              isComingSoon: false
-            },
-            // Priority 2: Regular items in stock 
-            {
-              isNewItem: false,
-              isComingSoon: false,
-              price: { gt: 0 }
-            },
-            // Priority 3: Coming soon items
-            {
-              isComingSoon: true
-            },
-            // Priority 4: Sale items
-            {
-              isOnSale: true,
-            }
-          ]
-        }
-      }
-    },
+  const availablePlants = await prisma.plant.findMany({
     where: {
-      pots: {
-        some: {
-          isDiscontinued: false,  // This ensures the plant only shows if it has at least one non-discontinued pot
-          OR: [
-            { isNewItem: true },
-            { price: { gt: 0 } },
-            { isComingSoon: true },
-            { isOnSale: true }
-          ]
+      isPublished: true,
+      isDiscontinued: false,
+      OR: [
+        // Priority 1: Plants on sale with stock
+        {
+          isOnSale: true,
+          qtyAvailable: { gt: 0 }
+        },
+        // Priority 2: Regular plants with stock
+        {
+          isOnSale: false,
+          qtyAvailable: { gt: 0 }
+        },
+        // Priority 3: Plants being acclimated (coming soon)
+        {
+          qtyAcclimating: { gt: 0 }
         }
-      }
-    }
+      ]
+    },
+    orderBy: [
+      { isOnSale: 'desc' },
+      { updatedAt: 'desc' },
+      { popularityScore: 'desc' }
+    ]
   });
 
-  /** Combines plant taxonomic properties (genus, species, cultivar, variety) into a single name string */
+  /** Combines plant taxonomic properties into a single name string */
   const extractName = (plant: Plant) => [plant.genus, plant.species, plant.cultivar, plant.variety]
     .filter(Boolean)
     .join(' ');
 
-  const extractTags = (plant: Plant): string[] => plant.tags.map((tag) => tag.name);
-
-  const plants: DisplayedPlantItem[] = featuredPlants.map((plant) => {
-    const pots: Pot[] = plant.pots;
-    const tags: Tag[] = plant.tags;
-
-    // we want to return a FeaturedPlant object from the plant, pots, and tags.
-    const featuredPlant: DisplayedPlantItem = {
+  const plants: DisplayedPlantItem[] = availablePlants.map((plant) => {
+    return {
       id: plant.id,
-      name: extractName(plant),
+      displayName: plant.displayName || extractName(plant),
       description: plant.description,
-      tags: extractTags(plant),
-      featuredImage: plant.featuredImage ?? plant.images[0] ?? null,
-      images: plant.images,
-      minPrice: getPriceDisplay(pots).min,
-      maxPrice: getPriceDisplay(pots).max,
-      isNewItem: plant.isNewItem,
+      featuredImage: plant.featuredImage,
+      price: plant.price?.toNumber() ?? null,
+      salePrice: plant.salePrice?.toNumber() ?? null,
       isOnSale: plant.isOnSale,
-      isComingSoon: plant.isComingSoon
+      isComingSoon: plant.qtyAvailable === 0 && plant.qtyAcclimating > 0,
+      isNewItem: isNewArrival(plant.createdAt),
+      size: plant.size,
+      currentSize: plant.currentSize,
+      qtyAvailable: plant.qtyAvailable
     };
   });
 
   return { plants };
-}; 
+};
+
+/** Helper function to determine if a plant is a new arrival (within last 30 days) */
+function isNewArrival(createdAt: Date): boolean {
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  return createdAt >= thirtyDaysAgo;
+} 
