@@ -1,6 +1,5 @@
 import { error } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
-import { sendOrderEmail } from '$lib/server/email';
 
 export const actions = {
   placeOrder: async ({ request }) => {
@@ -73,13 +72,6 @@ export const actions = {
       );
 
       return order;
-    });
-
-    // Send email notification
-    await sendOrderEmail({
-      to: 'ryanroga@gmail.com',
-      order,
-      items
     });
 
     return {
