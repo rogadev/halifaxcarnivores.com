@@ -1,36 +1,9 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { onMount } from 'svelte';
 	import Fuse from 'fuse.js';
 	import PlantItem from './PlantItem.svelte';
+	import type { Plant } from '@prisma/client';
 
-	interface Plant {
-		id: number;
-		name: string;
-		genus: string;
-		species: string;
-		unique: string;
-		price: number;
-		salePrice: number;
-		cost: number;
-		quantity: number;
-		new: boolean;
-		onSale: boolean;
-		images: string[];
-		description?: string;
-		water?: string;
-		light?: string;
-		temperature?: string;
-		humidity?: string;
-		seasonality?: string;
-		climateZoneId: number;
-		climateZone: {
-			id: number;
-		};
-		createdAt: Date;
-		updatedAt: Date;
-	}
 	interface Props {
 		plants: Plant[];
 	}
@@ -38,14 +11,15 @@
 	let { plants }: Props = $props();
 
 	let searchQuery = $state('');
-	let filteredPlants: Plant[] = $state([]);
-	let fuse: Fuse<Plant> = $state();
 
 	// Fuse.js options for searching
 	const fuseOptions = {
-		keys: ['name', 'genus', 'species', 'unique'],
+		keys: ['displayname', 'genus', 'species', 'cultivar', 'size'],
 		threshold: 0.3
 	};
+
+	let filteredPlants: Plant[] = $state([]);
+	let fuse = $state(new Fuse<Plant>([], fuseOptions));
 
 	onMount(() => {
 		// Initialize Fuse with the plants data directly
@@ -53,7 +27,7 @@
 		filteredPlants = plants;
 	});
 
-	run(() => {
+	$effect(() => {
 		if (fuse && searchQuery) {
 			const results = fuse.search(searchQuery);
 			filteredPlants = results.map((result) => result.item);

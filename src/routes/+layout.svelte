@@ -2,6 +2,7 @@
 	import '../app.postcss';
 	import Navbar from './Navbar.svelte';
 	import Footer from './Footer.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	/** @type {{children?: import('svelte').Snippet}} */
 	let { children } = $props();
 </script>
@@ -12,4 +13,5 @@
 		{@render children?.()}
 	</main>
 	<Footer />
+	<Toast />
 </div>

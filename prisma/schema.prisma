@@ -41,6 +41,7 @@ model Plant {
   acclimationNotes  String?
   featuredImage     String?
   isOnSale          Boolean            @default(false)
+  images            String[]
   ProductManagement ProductManagement?
 
   @@index([isPublished, isDiscontinued])
@@ -63,20 +64,18 @@ model ProductManagement {
 }
 
 model Sale {
-  id          String     @id
   totalAmount Decimal    @db.Decimal(10, 2)
   notes       String?
   date        DateTime   @default(now())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime
+  id          Int        @id @default(autoincrement())
   SaleItem    SaleItem[]
 
   @@index([date])
 }
 
 model SaleItem {
-  id          String   @id
-  saleId      String
   plantId     Int?
   soilId      Int?
   terrariumId Int?
@@ -85,6 +84,8 @@ model SaleItem {
   cost        Decimal  @db.Decimal(10, 2)
   createdAt   DateTime @default(now())
   updatedAt   DateTime
+  id          Int      @id @default(autoincrement())
+  saleId      Int
   Sale        Sale     @relation(fields: [saleId], references: [id])
 
   @@index([plantId])
@@ -97,12 +98,7 @@ model Soil {
   id                Int                @id @default(autoincrement())
   createdAt         DateTime           @default(now())
   updatedAt         DateTime
-  name              String
-  sku               String             @unique
-  slug              String             @unique
   description       String
-  images            String[]
-  thumbnail         String?
   price             Decimal            @db.Decimal(10, 2)
   salePrice         Decimal?           @db.Decimal(10, 2)
   stock             Int                @default(0)
@@ -113,23 +109,19 @@ model Soil {
   organicMatter     Boolean            @default(false)
   drainageRating    String
   nutrients         String[]
+  featuredImage     String?
+  images            String[]
+  displayName       String
   ProductManagement ProductManagement?
 
   @@index([isPublished])
-  @@index([sku])
-  @@index([slug])
 }
 
 model Terrarium {
   id                Int                @id @default(autoincrement())
   createdAt         DateTime           @default(now())
   updatedAt         DateTime
-  name              String
-  sku               String             @unique
-  slug              String             @unique
   description       String
-  images            String[]
-  thumbnail         String?
   price             Decimal            @db.Decimal(10, 2)
   salePrice         Decimal?           @db.Decimal(10, 2)
   stock             Int                @default(0)
@@ -141,9 +133,10 @@ model Terrarium {
   features          String[]
   includedItems     String[]
   customizable      Boolean            @default(false)
+  featuredImage     String?
+  images            String[]
+  displayName       String
   ProductManagement ProductManagement?
 
   @@index([isPublished])
-  @@index([sku])
-  @@index([slug])
 }

@@ -1,24 +1,26 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import Link from './NavbarLink.svelte';
 	import ProfileLink from './NavbarProfileLink.svelte';
 	import MobileDropdownMenu from './MobileDropdownMenu.svelte';
+	import CartIndicator from './NavbarCartIndicator.svelte';
 
 	const user = false; // Later, we'll have users that can fill carts
 
 	let path = $derived($page.url.pathname);
 
 	const links = [
-		{ name: 'Home', href: '/' },
 		{ name: 'About', href: '/about-us' },
-		{ name: 'Shop', href: '/shop' },
+		{ name: '-', href: '#' },
+		{ name: 'Plants', href: '/plants' },
+		{ name: 'Soils', href: '/soils' },
+		{ name: 'Terrariums', href: '/terrariums' },
+		{ name: '-', href: '#' },
 		{ name: 'Care', href: '/plant-care-guides' },
 		{ name: 'Blog', href: '/blog' },
 		{ name: 'Contact', href: '/contact' },
+		{ name: '-', href: '#' },
 		{ name: 'FAQ', href: '/faq' },
 		{ name: 'Events', href: '/events' }
 	];
@@ -31,9 +33,9 @@
 
 	let showMobileMenu = $state(false);
 	let showProfileMenu = $state(false);
-	let previousPath: string = $state();
+	let previousPath = $state<string | undefined>();
 
-	run(() => {
+	$effect(() => {
 		if (path !== previousPath) {
 			showMobileMenu = false;
 			showProfileMenu = false;
@@ -91,8 +93,12 @@
 				</a>
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
-						{#each links as { name, href }}
-							<Link {name} {href} {path} />
+						{#each links as link}
+							{#if link.name === '-'}
+								<div class="border-l-2 border-gray-600 h-6 my-auto mx-2"></div>
+							{:else}
+								<Link name={link.name} href={link.href} {path} />
+							{/if}
 						{/each}
 					</div>
 				</div>
@@ -100,17 +106,10 @@
 			<div
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 			>
-				<!-- <a href="/contact" class="hidden md:block text-white font-bold text-lg">902-830-8881</a>
-				<a
-					href="tel:19028308881"
-					type="button"
-					class="md:hidden inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-				>
-					<Icon icon="mdi:phone" class="-ml-0.5 h-5 w-5" />
-					Call Now
-				</a> -->
+				<CartIndicator />
 
 				{#if user}
+					<div class="w-4" />
 					<button
 						type="button"
 						class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

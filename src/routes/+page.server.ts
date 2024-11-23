@@ -1,4 +1,4 @@
-import { prisma } from '$lib/server/utils/prisma';
+import { prisma } from '$lib/server/prisma';
 import type { Plant } from '@prisma/client';
 import type { DisplayedPlantItem } from '$lib/types';
 

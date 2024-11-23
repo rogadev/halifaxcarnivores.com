@@ -1,4 +1,4 @@
-import type { Plant } from '@prisma/client';
+import type { Plant, Soil, Terrarium } from '@prisma/client';
 
 export type DisplayedPlantItem = Pick<
   Plant,
@@ -13,6 +13,7 @@ export type DisplayedPlantItem = Pick<
   | 'careWater'
   | 'careHumidity'
   | 'careTemperature'
+  | 'qtyAvailable'
   | 'size'
   | 'currentSize'
   | 'maxSize'
@@ -22,3 +23,16 @@ export type DisplayedPlantItem = Pick<
   isComingSoon: boolean;
   isNewItem: boolean;
 };
+
+export type CartItemType = {
+  id: string; // Unique ID for DOM purposes
+  quantity: number;
+  orderStatus: 'pending' | 'ordered';
+  orderId?: string;
+  item: Plant | Soil | Terrarium;
+};
+
+export interface Cart {
+  items: CartItemType[];
+  lastOrderId?: string;
+}

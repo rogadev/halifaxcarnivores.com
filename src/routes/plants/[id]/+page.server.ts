@@ -6,19 +6,9 @@ import type { DisplayedPlantItem } from '$lib/types';
 export const load: PageServerLoad = async ({ params }) => {
   const plant = await prisma.plant.findUnique({
     where: {
-      id: params.id
-    },
-    include: {
-      plantPots: {
-        include: {
-          pot: true
-        }
-      },
-      plantTags: {
-        include: {
-          tag: true
-        }
-      }
+      id: parseInt(params.id),
+      isPublished: true,
+      isDiscontinued: false
     }
   });
 
@@ -26,29 +16,38 @@ export const load: PageServerLoad = async ({ params }) => {
     error(404, 'Plant not found');
   }
 
-  const extractName = (plant: Plant) => [plant.genus, plant.species, plant.cultivar, plant.variety]
-    .filter(Boolean)
-    .join(' ');
-
-  const extractTags = (plant: Plant): string[] => plant.tags.map((tag) => tag.name);
-
   const displayedPlant: DisplayedPlantItem = {
     id: plant.id,
-    name: extractName(plant),
+    displayName: plant.displayName,
     description: plant.description,
-    tags: extractTags(plant),
-    featuredImage: plant.featuredImage ?? plant.images[0] ?? null,
-    images: plant.images || [],
-    minPrice: plant.plantPots.reduce((min, pot) => Math.min(min, pot.pot.price), Infinity),
-    maxPrice: plant.plantPots.reduce((max, pot) => Math.max(max, pot.pot.price), -Infinity),
-    isNewItem: plant.new,
-    isOnSale: plant.onSale,
-    isComingSoon: plant.comingSoon
+    featuredImage: plant.featuredImage,
+    price: plant.price?.toNumber() ?? null,
+    salePrice: plant.salePrice?.toNumber() ?? null,
+    isOnSale: plant.isOnSale,
+    qtyAvailable: plant.qtyAvailable,
+    careLight: plant.careLight,
+    careWater: plant.careWater,
+    careHumidity: plant.careHumidity,
+    careTemperature: plant.careTemperature,
+    size: plant.size,
+    currentSize: plant.currentSize,
+    maxSize: plant.maxSize,
+    petFriendly: plant.petFriendly,
+    // Derived fields
+    isComingSoon: plant.qtyAvailable === 0 && plant.qtyAcclimating > 0,
+    isNewItem: isNewArrival(plant.createdAt)
   };
 
   return {
     plant: displayedPlant
   };
 };
+
+/** Helper function to determine if a plant is a new arrival (within last 30 days) */
+function isNewArrival(createdAt: Date): boolean {
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  return createdAt >= thirtyDaysAgo;
+}
 
 
