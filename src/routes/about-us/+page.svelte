@@ -84,7 +84,7 @@
 			</ul>
 			<p class="mt-8">
 				Currently, you can explore our captivating carnivorous plant collection
-				<Link href="/shop">right here</Link> on our website. To make a purchase, simply
+				<Link href="/plants">right here</Link> on our website. To make a purchase, simply
 				<Link href="/contact">give us a call or send us an email</Link>, and our knowledgeable team
 				will be delighted to assist you. <strong>Stay tuned</strong>, as we're actively working on
 				an online store for your convenience, where you'll soon be able to browse and buy these
