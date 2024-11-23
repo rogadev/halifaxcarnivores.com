@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	$: message = $page?.error?.message;
+	let message = $derived($page?.error?.message);
 </script>
 
 <div

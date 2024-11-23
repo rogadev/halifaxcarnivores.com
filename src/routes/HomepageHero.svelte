@@ -48,7 +48,7 @@
 			<div
 				class="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
 				style="clip-path: polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)"
-			/>
+			></div>
 		</div>
 		<div class="overflow-hidden">
 			<div class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
@@ -60,7 +60,9 @@
 						<h2 class="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl">
 							Your Local Source for Exotic Carnivorous Plants and More in Halifax and Dartmouth
 						</h2>
-						<p class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
+						<p
+							class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none before:absolute before:-inset-4 before:block before:rounded-lg before:bg-gradient-to-r before:from-white/0 before:via-white/95 before:to-white/0 before:-z-10 before:sm:hidden"
+						>
 							Discover the fascinating world of carnivorous plants with Halifax Carnivores, your
 							go-to destination for rare and exotic insect-eating flora like Venus Flytraps,
 							Sarracenia, Nepenthes, and Drosera. More than just a plant shop, we're a vibrant
@@ -96,7 +98,7 @@
 								/>
 								<div
 									class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
-								/>
+								></div>
 							</div>
 						</div>
 						<div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
@@ -108,7 +110,7 @@
 								/>
 								<div
 									class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
-								/>
+								></div>
 							</div>
 							<div class="relative">
 								<img
@@ -118,7 +120,7 @@
 								/>
 								<div
 									class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
-								/>
+								></div>
 							</div>
 						</div>
 						<div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
@@ -130,7 +132,7 @@
 								/>
 								<div
 									class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
-								/>
+								></div>
 							</div>
 							<div class="relative">
 								<img
@@ -140,7 +142,7 @@
 								/>
 								<div
 									class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
-								/>
+								></div>
 							</div>
 						</div>
 					</section>

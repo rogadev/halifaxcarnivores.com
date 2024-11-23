@@ -2,44 +2,24 @@
 	import { onMount } from 'svelte';
 	import Fuse from 'fuse.js';
 	import PlantItem from './PlantItem.svelte';
+	import type { Plant } from '@prisma/client';
 
-	interface Plant {
-		id: number;
-		name: string;
-		genus: string;
-		species: string;
-		unique: string;
-		price: number;
-		salePrice: number;
-		cost: number;
-		quantity: number;
-		new: boolean;
-		onSale: boolean;
-		images: string[];
-		description?: string;
-		water?: string;
-		light?: string;
-		temperature?: string;
-		humidity?: string;
-		seasonality?: string;
-		climateZoneId: number;
-		climateZone: {
-			id: number;
-		};
-		createdAt: Date;
-		updatedAt: Date;
+	interface Props {
+		plants: Plant[];
 	}
-	export let plants: Plant[];
 
-	let searchQuery = '';
-	let filteredPlants: Plant[] = [];
-	let fuse: Fuse<Plant>;
+	let { plants }: Props = $props();
+
+	let searchQuery = $state('');
 
 	// Fuse.js options for searching
 	const fuseOptions = {
-		keys: ['name', 'genus', 'species', 'unique'],
+		keys: ['displayname', 'genus', 'species', 'cultivar', 'size'],
 		threshold: 0.3
 	};
+
+	let filteredPlants: Plant[] = $state([]);
+	let fuse = $state(new Fuse<Plant>([], fuseOptions));
 
 	onMount(() => {
 		// Initialize Fuse with the plants data directly
@@ -47,14 +27,14 @@
 		filteredPlants = plants;
 	});
 
-	$: {
+	$effect(() => {
 		if (fuse && searchQuery) {
 			const results = fuse.search(searchQuery);
 			filteredPlants = results.map((result) => result.item);
 		} else if (plants) {
 			filteredPlants = plants;
 		}
-	}
+	});
 </script>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

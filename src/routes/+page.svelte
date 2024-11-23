@@ -1,11 +1,19 @@
 <script lang="ts">
+	import Icon from '@iconify/svelte';
 	import OrderingSection from './OrderingSection.svelte';
 	import EventsSection from './EventsSection.svelte';
 	import CareSection from './CareSection.svelte';
 	import HomepageHero from './HomepageHero.svelte';
 	import BlogSection from './BlogSection.svelte';
-	import OurShopSection from '$lib/components/OurShopSection/index.svelte';
-	import Icon from '@iconify/svelte';
+	import FeaturedItems from './FeaturedItems.svelte';
+
+	// Add the data prop from the server
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
+	const { plants } = data;
 
 	// Calculate next Friday's date (not tomorrow, but the following Friday)
 	const today = new Date();
@@ -27,7 +35,7 @@
 		isDismissed = localStorage.getItem('bannerDismissed') === 'true';
 	}
 
-	let showBanner = today < nextFriday && !isDismissed;
+	let showBanner = $state(today < nextFriday && !isDismissed);
 
 	function dismissBanner() {
 		isDismissed = true;
@@ -40,7 +48,7 @@
 	<title>Halifax Carnivores - Your Carnivorous Plant Haven</title>
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-8">
+<div class="max-w-7xl mx-auto">
 	<div class="flex flex-col gap-8">
 		{#if showBanner}
 			<div class="bg-amber-50 border-b border-amber-200">
@@ -59,7 +67,7 @@
 						<div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
 							<button
 								type="button"
-								on:click={dismissBanner}
+								onclick={dismissBanner}
 								class="flex rounded-md p-2 hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
 								aria-label="Dismiss banner"
 							>
@@ -72,7 +80,7 @@
 		{/if}
 
 		<HomepageHero />
-		<OurShopSection />
+		<FeaturedItems {plants} />
 		<OrderingSection />
 		<CareSection />
 		<BlogSection />

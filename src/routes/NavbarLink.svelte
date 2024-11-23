@@ -1,9 +1,13 @@
 <script lang="ts">
-	export let name: string;
-	export let href: string;
-	export let path: string;
+	interface Props {
+		name: string;
+		href: string;
+		path: string;
+	}
 
-	$: current = path === href;
+	let { name, href, path }: Props = $props();
+
+	let current = $derived(path === href);
 </script>
 
 <a
