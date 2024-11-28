@@ -1,0 +1,160 @@
+## Image Handling
+
+### Using Nuxt Image
+
+- Always use `<NuxtImg>` over regular `img` tags for:
+  - Automatic image optimization
+  - Responsive image generation
+  - Built-in lazy loading
+  - Improved accessibility
+  - Better SEO performance
+
+### Configuration
+
+- Configure Nuxt Image provider in `nuxt.config.ts`:
+  ```ts
+  export default defineNuxtConfig({
+    image: {
+      provider: 'ipx',
+      quality: 80,
+      format: ['webp', 'jpg'],
+      screens: {
+        xs: 320,
+        sm: 640,
+        md: 768,
+        lg: 1024,
+        xl: 1280,
+      },
+    },
+  })
+  ```
+
+### Best Practices
+
+- Always provide descriptive `alt` text for accessibility
+- Use responsive sizes with `sizes` prop:
+  ```vue
+  <NuxtImg
+    src="/path/to/image.jpg"
+    alt="Descriptive text"
+    sizes="sm:100vw md:50vw lg:400px"
+  />
+  ```
+- Implement proper loading strategies:
+  - Use `loading="lazy"` for below-fold images
+  - Use `loading="eager"` for hero/above-fold images
+- Set appropriate width and height to prevent layout shift:
+  ```vue
+  <NuxtImg
+    src="/path/to/image.jpg"
+    width="800"
+    height="600"
+    alt="Descriptive text"
+  />
+  ```
+
+### Image Sources
+
+- For Supabase storage:
+  - Use full URL path including bucket
+  - Handle missing images gracefully
+  - Example:
+  ```vue
+  <NuxtImg
+    :src="imageUrl || '/placeholder.jpg'"
+    :alt="imageAlt"
+    width="400"
+    height="300"
+    loading="lazy"
+    class="rounded-lg object-cover"
+  />
+  ```
+
+### Performance Considerations
+
+- Use appropriate image dimensions
+- Enable WebP format support
+- Implement proper caching strategies
+- Consider using blur placeholder for large images
+- Monitor image loading performance
+
+### Error Handling
+
+- Provide fallback images
+- Handle loading errors gracefully
+- Implement proper error boundaries
+- Log image loading failures
+- Use shadcn-vue components and Iconify icons for error states:
+  ```vue
+  <!-- Always use shadcn-vue Button component -->
+  <Button variant="destructive">
+    <Icon name="mdi:alert-circle" class="mr-2 h-5 w-5" />
+    Error Loading Image
+  </Button>
+  ```
+
+### SEO Optimization
+
+- Use descriptive file names
+- Implement proper image metadata
+- Optimize image size and quality
+- Use appropriate image formats
+
+### Accessibility
+
+- Provide meaningful alt text
+- Ensure proper color contrast
+- Consider reduced motion preferences
+- Test with screen readers
+- Use semantic Iconify icons with proper ARIA labels and shadcn-vue components:
+  ```vue
+  <Button variant="ghost" size="icon">
+    <Icon name="mdi:image-broken" class="h-5 w-5" aria-label="Broken image" />
+  </Button>
+  ```
+
+### UI Components
+
+- Always use shadcn-vue components instead of native HTML elements:
+
+  ```vue
+  <!-- ❌ Don't use native HTML elements -->
+  <button class="btn">Click me</button>
+
+  <!-- ✅ Use shadcn-vue components instead -->
+  <Button variant="default">Click me</Button>
+  ```
+
+### Icon Usage
+
+- Always use Iconify icons through the `<Icon>` component:
+
+  - Replace direct icon component imports (e.g., `<Plus />`) with Iconify equivalents
+  - Use the MDI (Material Design Icons) set as the primary icon set
+  - Example with shadcn-vue Button:
+
+  ```vue
+  <!-- ❌ Don't use direct icon components or native buttons -->
+  <button class="btn">
+    <Plus class="mr-2 h-4 w-4" />
+    Add Item
+  </button>
+
+  <!-- ✅ Use Iconify icons with shadcn-vue Button -->
+  <Button variant="default">
+    <Icon name="mdi:plus" class="mr-2 h-4 w-4" />
+    Add Item
+  </Button>
+  ```
+
+- Common icon prefixes:
+  - `mdi:` - Material Design Icons
+  - `heroicons:` - Heroicons
+  - `ph:` - Phosphor Icons
+  - `lucide:` - Lucide Icons
+
+## Prisma
+
+### Handling `Decimal`
+
+We shouldn't use Prisma's `Decimal` directly in the frontend. Instead, we should handle things like prices as a number or string in the frontend component. The `Decimal` type should only be used on the server side. In the frontend, we'll receive the price values as regular numbers or strings and can format them as needed using regular JavaScript number formatting.
