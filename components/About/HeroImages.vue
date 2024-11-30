@@ -19,9 +19,9 @@ const imageData = computed(() => (featuredImages.value || []).map(img => ({
 <template>
   <div class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
     <!-- First Column -->
-    <div class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
+    <div class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-96 lg:pt-32 xl:pt-80">
       <div class="relative">
-        <NuxtLink v-if="imageData[0]?.plantId" :to="`/plant/${imageData[0].plantId}`" class="block">
+        <NuxtLink v-if="imageData[0]?.plantId" :to="`/plants/${imageData[0].plantId}`" class="block">
           <NuxtImg :src="imageData[0]?.url || '/images/placeholder-plant.jpg'" alt="Featured plant"
             class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg" width="400" height="600"
             loading="eager" />
@@ -31,9 +31,9 @@ const imageData = computed(() => (featuredImages.value || []).map(img => ({
     </div>
 
     <!-- Second Column -->
-    <div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
+    <div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-72 lg:pt-32">
       <div v-for="index in [1, 2]" :key="index" class="relative">
-        <NuxtLink v-if="imageData[index]?.plantId" :to="`/plant/${imageData[index].plantId}`" class="block">
+        <NuxtLink v-if="imageData[index]?.plantId" :to="`/plants/${imageData[index].plantId}`" class="block">
           <NuxtImg :src="imageData[index]?.url || '/images/placeholder-plant.jpg'" alt="Featured plant"
             class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg" width="400" height="600"
             loading="eager" />
@@ -43,9 +43,9 @@ const imageData = computed(() => (featuredImages.value || []).map(img => ({
     </div>
 
     <!-- Third Column -->
-    <div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
+    <div class="w-44 flex-none space-y-8 pt-32">
       <div v-for="index in [3, 4]" :key="index" class="relative">
-        <NuxtLink v-if="imageData[index]?.plantId" :to="`/plant/${imageData[index].plantId}`" class="block">
+        <NuxtLink v-if="imageData[index]?.plantId" :to="`/plants/${imageData[index].plantId}`" class="block">
           <NuxtImg :src="imageData[index]?.url || '/images/placeholder-plant.jpg'" alt="Featured plant"
             class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg" width="400" height="600"
             loading="eager" />

@@ -60,14 +60,22 @@ useHead({
           <rect width="100%" height="100%" stroke-width="0" fill="url(#plant-hero-pattern)" />
         </svg>
 
+        <div
+          class="absolute left-1/2 right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
+          aria-hidden="true">
+          <div class="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+            style="clip-path: polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)" />
+        </div>
+
         <div class="overflow-hidden">
           <div class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
             <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-              <div class="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
-                <h1 class="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Discover Our
-                  Plant Collection</h1>
+              <div class="w-full lg:max-w-xl lg:flex-auto xl:max-w-2xl">
+                <h1 class="text-pretty text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Carnivorous
+                  Plants in Halifax</h1>
                 <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none">
-                  Browse our carefully curated selection of plants, perfect for bringing life and beauty to any space.
+                  We're passionate plant enthusiasts dedicated to ethically growing and sharing exotic carnivorous
+                  plants with our local community in Halifax and Dartmouth.
                 </p>
               </div>
 
@@ -78,7 +86,19 @@ useHead({
         </div>
       </div>
 
-      <!-- Replace the Featured Plants Grid with the new component -->
+      <!-- Content section -->
+      <AboutMission />
+
+      <!-- Values section -->
+      <AboutValues />
+
+      <!-- Locations section -->
+      <!-- <AboutLocations /> -->
+
+      <!-- Team section -->
+      <AboutTeam />
+
+      <!-- Image section -->
       <AboutFeaturedPlantsGrid />
     </main>
   </div>
