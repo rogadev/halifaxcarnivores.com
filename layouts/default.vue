@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
-const user = useSupabaseUser();
 const route = useRoute();
 const router = useRouter();
 
@@ -10,59 +9,59 @@ type NavLinks = {
   href: string;
 }[];
 
-const baseNavigationLinks: NavLinks = [
+const nav: NavLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Login', href: '/auth/login' },
-  { name: 'Register', href: '/auth/register' }
-];
-
-const userNavigationLinks: NavLinks = [
-  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'About', href: '/about-us' },
   { name: 'Plants', href: '/plants' },
-];
-
-const userNavigation: NavLinks = [
-  { name: 'Profile', href: '/auth/profile' },
-  { name: 'Settings', href: '/auth/settings' },
-  { name: 'Sign out', href: '/auth/logout' }
 ];
 
 // Reactive references
 const currentUrl = ref(route.path);
-
-// Computed properties
-const nav = computed(() => user.value ? userNavigationLinks : baseNavigationLinks);
 
 // Watchers
 watch(route, (newRoute) => {
   currentUrl.value = newRoute.path;
 });
 
-watch(user, () => {
-  if (user.value) {
-    // Set default avatar if none exists
-    user.value.imageUrl = user.value.user_metadata?.avatar_url ?? '/images/default-avatar.webp';
-  }
-});
-
 // Methods
 const navigateAndCloseMenu = (href: string) => {
   router.push(href);
+  closeMenu();
 };
 
 const getIconForRoute = (name: string) => {
   const iconMap: Record<string, string> = {
     Home: 'mdi:home',
-    Login: 'mdi:login',
-    Register: 'mdi:account-plus',
-    Dashboard: 'mdi:view-dashboard',
+    About: 'mdi:information',
     Plants: 'mdi:flower',
-    Profile: 'mdi:account',
-    Settings: 'mdi:cog',
-    'Sign out': 'mdi:logout'
+    Cart: 'mdi:cart'
   };
   return iconMap[name] || 'mdi:circle';
 };
+
+useHead({
+  title: 'Halifax Carnivores | Carnivorous Plants in Halifax & Dartmouth',
+  titleTemplate: '%s | Halifax Carnivores',
+  meta: [
+    { name: 'description', content: 'Halifax Carnivores specializes in carnivorous plants including Venus Flytraps (Dionaea muscipula), Pitcher Plants (Nepenthes), Sundews (Drosera), and Butterworts (Pinguicula). Visit us at Alderney and Halifax Seaport Farmers Markets.' },
+    { name: 'keywords', content: 'carnivorous plants, Venus Flytrap, Dionaea muscipula, Pitcher Plant, Nepenthes, Sundew, Drosera, Butterwort, Pinguicula, Halifax, Dartmouth, Nova Scotia, farmers market' },
+    // Open Graph
+    { property: 'og:title', content: 'Halifax Carnivores | Carnivorous Plants in Halifax & Dartmouth' },
+    { property: 'og:description', content: 'Specialized carnivorous plant nursery serving Halifax and Dartmouth. Find us at local farmers markets for unique plants like Venus Flytraps, Pitcher Plants, Sundews, and Butterworts.' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:locale', content: 'en_CA' },
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'Halifax Carnivores | Carnivorous Plants in Halifax & Dartmouth' },
+    { name: 'twitter:description', content: 'Specialized carnivorous plant nursery serving Halifax and Dartmouth. Find us at local farmers markets for unique plants like Venus Flytraps, Pitcher Plants, Sundews, and Butterworts.' },
+    // Location
+    { name: 'geo.region', content: 'CA-NS' },
+    { name: 'geo.placename', content: 'Dartmouth, Nova Scotia' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://halifaxcarnivores.com' },
+  ],
+});
 </script>
 
 <template>
@@ -70,56 +69,39 @@ const getIconForRoute = (name: string) => {
     <nav class="bg-white border-b border-gray-200 shadow-sm">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <NuxtLink to="/dashboard" class="flex-shrink-0 flex items-center gap-2">
+          <!-- Logo Section -->
+          <div class="flex-shrink-0">
+            <NuxtLink to="/" class="flex items-center gap-2">
               <Icon name="mdi:plant" class="h-8 w-8 text-emerald-600 transition-transform hover:scale-110"
                 aria-label="Plants App" />
-              <span class="hidden md:block font-semibold text-gray-900">PlantApp</span>
+              <span class="hidden md:block font-semibold text-gray-900">Halifax Carnivores</span>
             </NuxtLink>
-
-            <!-- Navigation Links -->
-            <div class="ml-10 flex items-baseline space-x-1 sm:space-x-2">
-              <NuxtLink v-for="item in nav" :key="item.name" :to="item.href" :class="[
-                currentUrl === item.href
-                  ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
-                'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150'
-              ]" :aria-current="currentUrl === item.href ? 'page' : undefined">
-                <Icon :name="getIconForRoute(item.name)" class="h-5 w-5 md:mr-2 transition-colors"
-                  :class="currentUrl === item.href ? 'text-emerald-600' : 'text-gray-500'" :aria-label="item.name" />
-                <span class="hidden md:inline">{{ item.name }}</span>
-              </NuxtLink>
-            </div>
           </div>
 
-          <!-- User Menu -->
-          <Menu v-if="user" as="div" class="relative ml-3">
-            <div>
-              <MenuButton
-                class="relative flex items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-                <span class="sr-only">Open user menu</span>
-                <Icon name="mdi:account-circle" class="h-9 w-9 text-gray-700 hover:text-emerald-600 transition-colors"
-                  aria-hidden="true" />
-              </MenuButton>
-            </div>
-            <transition enter-active-class="transition ease-out duration-200"
-              enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-              leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-              leave-to-class="transform opacity-0 scale-95">
-              <MenuItems
-                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                <button @click="navigateAndCloseMenu(item.href)"
-                  class="flex w-full items-center px-4 py-2 text-sm text-gray-700 transition-colors"
-                  :class="[active ? 'bg-gray-50' : '']">
-                  <Icon :name="getIconForRoute(item.name)" class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true" />
-                  {{ item.name }}
-                </button>
-                </MenuItem>
-              </MenuItems>
-            </transition>
-          </Menu>
+          <!-- Navigation Links - Centered -->
+          <div class="flex items-baseline space-x-1 sm:space-x-2 mx-4">
+            <NuxtLink v-for="item in nav" :key="item.name" :to="item.href" :class="[
+              currentUrl === item.href
+                ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+              'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150'
+            ]" :aria-current="currentUrl === item.href ? 'page' : undefined">
+              <Icon :name="getIconForRoute(item.name)" class="h-5 w-5 md:mr-2 transition-colors"
+                :class="currentUrl === item.href ? 'text-emerald-600' : 'text-gray-500'" :aria-label="item.name" />
+              <span class="hidden md:inline">{{ item.name }}</span>
+            </NuxtLink>
+          </div>
+
+          <!-- Cart Button - Right aligned -->
+          <div class="flex-shrink-0">
+            <Button variant="ghost" size="icon" class="relative">
+              <Icon name="mdi:cart" class="h-6 w-6" />
+              <span
+                class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                0
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
