@@ -94,13 +94,23 @@ useHead({
 
           <!-- Cart Button - Right aligned -->
           <div class="flex-shrink-0">
-            <Button variant="ghost" size="icon" class="relative">
-              <Icon name="mdi:cart" class="h-6 w-6" />
-              <span
-                class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
-              </span>
-            </Button>
+            <Popover>
+              <PopoverTrigger>
+                <Button variant="ghost" size="icon" class="relative">
+                  <Icon name="mdi:cart" class="h-6 w-6" />
+                  <span
+                    class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    0
+                  </span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent class="w-64">
+                <div class="flex items-center gap-2 text-sm">
+                  <Icon name="mdi:clock-outline" class="h-4 w-4 text-gray-500" />
+                  <p>Shopping cart feature coming soon!</p>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </div>
