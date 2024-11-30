@@ -15,7 +15,9 @@ export default defineNuxtConfig({
   css: ['@/assets/main.css'],
 
   supabase: {
-    // Remove redirectOptions to allow unrestricted access
+    redirectOptions: {
+      exclude: ['/*'],
+    }
   },
 
   compatibilityDate: '2024-08-27',
