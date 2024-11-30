@@ -9,134 +9,78 @@ datasource db {
 }
 
 model Plant {
-  id                Int                @id @default(autoincrement())
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime
-  displayName       String             @unique
-  genus             String?
-  species           String?
-  cultivar          String?
-  variety           String?
-  size              String?
-  description       String?
-  currentSize       Int?
-  price             Decimal?           @db.Decimal(10, 2)
-  salePrice         Decimal?           @db.Decimal(10, 2)
-  isPublished       Boolean            @default(true)
-  isDiscontinued    Boolean            @default(false)
-  qtyAvailable      Int                @default(0)
-  qtyAcclimating    Int                @default(0)
-  qtyQuarantine     Int                @default(0)
-  qtyOrdered        Int                @default(0)
-  qtyLost           Int                @default(0)
-  qtyOther          Int                @default(0)
-  careLight         String?
-  careWater         String?
-  careHumidity      String?
-  careTemperature   String?
-  maxSize           Int?
-  petFriendly       Boolean            @default(false)
-  popularityScore   Int?
-  acclimationDate   DateTime?
-  acclimationNotes  String?
-  featuredImage     String?
-  isOnSale          Boolean            @default(false)
-  images            String[]
-  ProductManagement ProductManagement?
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@index([isPublished, isDiscontinued])
+  // Essential Information
+  genus         String
+  species       String?
+  cultivar      String?
+  variety       String?
+  sizeOrVariant String?
+  displayName   String  @unique // Generated from genus, species, cultivar, variety, and sizeOrVariant
+
+  // Media
+  images Image[]
+
+  // Product Details
+  price          Decimal  @default(0) @db.Decimal(10, 2)
+  previousPrice  Decimal? @db.Decimal(10, 2) // Null unless on sale.
+  isPublished    Boolean  @default(true)
+  isNewArrival   Boolean  @default(true)
+  isDiscontinued Boolean  @default(false)
+
+  // Stock
+  qtyOnHold      Int       @default(0)
+  qtyAvailable   Int       @default(0)
+  qtyComingSoon  Int       @default(0)
+  comingSoonDate DateTime?
+
+  // Plant information
+  difficulty              Int     @default(0) @db.SmallInt // 1-10 (0 if not to be displayed)
+  description             String? @db.Text
+  lightRequirements       String? @db.Text
+  waterRequirements       String? @db.Text
+  humidityRequirements    String? @db.Text
+  temperatureRequirements String? @db.Text
+  soilRequirements        String? @db.Text
+  petFriendly             Boolean @default(false)
+
+  // Analytics
+  popularityScore Int? @db.Integer
+
+  // Add indexes for frequently queried fields
+  @@index([isPublished, isDiscontinued, displayName, genus, difficulty])
 }
 
-model ProductManagement {
-  id            Int        @id @default(autoincrement())
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime
-  costPrice     Decimal?   @db.Decimal(10, 2)
-  reorderPoint  Int        @default(5)
-  lastOrderDate DateTime?
-  notes         String?
-  plantId       Int?       @unique
-  soilId        Int?       @unique
-  terrariumId   Int?       @unique
-  Plant         Plant?     @relation(fields: [plantId], references: [id])
-  Soil          Soil?      @relation(fields: [soilId], references: [id])
-  Terrarium     Terrarium? @relation(fields: [terrariumId], references: [id])
-}
+model Image {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Sale {
-  totalAmount Decimal    @db.Decimal(10, 2)
-  notes       String?
-  date        DateTime   @default(now())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime
-  id          Int        @id @default(autoincrement())
-  SaleItem    SaleItem[]
+  // Image for...
+  plantId Int
+  plant   Plant @relation(fields: [plantId], references: [id])
 
-  @@index([date])
-}
+  // Essential Information
+  url String
 
-model SaleItem {
-  plantId     Int?
-  soilId      Int?
-  terrariumId Int?
-  quantity    Int
-  price       Decimal  @db.Decimal(10, 2)
-  cost        Decimal  @db.Decimal(10, 2)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-  id          Int      @id @default(autoincrement())
-  saleId      Int
-  Sale        Sale     @relation(fields: [saleId], references: [id])
+  // Media Information
+  altText         String?
+  description     String?
+  isFeaturedImage Boolean @default(false)
 
-  @@index([plantId])
-  @@index([saleId])
-  @@index([soilId])
-  @@index([terrariumId])
-}
+  // SEO Information
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
 
-model Soil {
-  id                Int                @id @default(autoincrement())
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime
-  description       String
-  price             Decimal            @db.Decimal(10, 2)
-  salePrice         Decimal?           @db.Decimal(10, 2)
-  stock             Int                @default(0)
-  isPublished       Boolean            @default(false)
-  weight            Decimal            @db.Decimal(10, 2)
-  composition       String[]
-  ph                Decimal?           @db.Decimal(3, 1)
-  organicMatter     Boolean            @default(false)
-  drainageRating    String
-  nutrients         String[]
-  featuredImage     String?
-  images            String[]
-  displayName       String
-  ProductManagement ProductManagement?
+  // Analytics
+  views  Int @default(0) @db.Integer
+  clicks Int @default(0) @db.Integer
+  shares Int @default(0) @db.Integer
+  likes  Int @default(0) @db.Integer
 
-  @@index([isPublished])
-}
-
-model Terrarium {
-  id                Int                @id @default(autoincrement())
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime
-  description       String
-  price             Decimal            @db.Decimal(10, 2)
-  salePrice         Decimal?           @db.Decimal(10, 2)
-  stock             Int                @default(0)
-  isPublished       Boolean            @default(false)
-  dimensions        Json
-  glassThickness    Decimal            @db.Decimal(3, 1)
-  material          String
-  style             String
-  features          String[]
-  includedItems     String[]
-  customizable      Boolean            @default(false)
-  featuredImage     String?
-  images            String[]
-  displayName       String
-  ProductManagement ProductManagement?
-
-  @@index([isPublished])
+  @@index([isFeaturedImage])
 }
