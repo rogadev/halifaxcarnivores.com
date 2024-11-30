@@ -158,3 +158,15 @@
 ### Handling `Decimal`
 
 We shouldn't use Prisma's `Decimal` directly in the frontend. Instead, we should handle things like prices as a number or string in the frontend component. The `Decimal` type should only be used on the server side. In the frontend, we'll receive the price values as regular numbers or strings and can format them as needed using regular JavaScript number formatting.
+
+## Backend API
+
+### Prisma Client
+
+Because we're using Vercel, we should always instantiate a new Prisma client in our API routes instead of importing the global `prisma` object.
+
+```ts
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+```
