@@ -31,8 +31,9 @@ const values = [
   <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
     <div class="mx-auto max-w-2xl lg:mx-0">
       <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Our values</h2>
-      <p class="mt-6 text-lg/8 text-gray-600">Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam
-        voluptatum cupiditate veritatis in accusamus quisquam.</p>
+      <p class="mt-6 text-lg/8 text-gray-600">At Halifax Carnivores, our values guide everything we do. From sustainable
+        growing practices to community engagement, we're dedicated to sharing our passion for carnivorous plants while
+        ensuring their preservation for future generations.</p>
     </div>
     <dl
       class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
